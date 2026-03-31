@@ -3,43 +3,35 @@ import Logo from "./Logo";
 
 export default function Header() {
   return (
-    <>
+    <div className="sticky top-0 z-50">
       {/* Announcement bar */}
-      <div className="bg-indigo-600 text-white text-center text-xs font-medium py-2 px-4">
-        <span className="inline-flex items-center gap-1.5">
-          <span>🚀</span>
-          Judgeathon 2026 is live — April 1–2 only ·{" "}
-          <Link href="/register" className="underline underline-offset-2 font-semibold hover:text-indigo-200 transition-colors">
-            Register now
+      <div className="bg-[#f5c400] border-b-2 border-black px-6 py-2 text-center">
+        <p className="text-xs font-black uppercase tracking-widest font-mono-accent">
+          🚨 Judgeathon 2026 is LIVE — April 1–2 only ·{" "}
+          <Link href="/register" className="underline underline-offset-2 hover:no-underline">
+            Register now →
           </Link>
-        </span>
+        </p>
       </div>
-
-      <header className="border-b border-slate-100 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+      {/* Main header */}
+      <header className="bg-white border-b-2 border-black">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-3">
             <Logo width={32} height={32} />
-            <span className="font-bold text-[var(--color-navy)] tracking-tight">Danveer</span>
+            <span className="font-black text-lg tracking-tight uppercase">Danveer</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-7 text-sm text-slate-500 font-medium">
-            {["How It Works", "Prizes", "Panel", "Schedule", "FAQ"].map((item) => {
-              const href = `#${item === "How It Works" ? "how-it-works" : item === "Panel" ? "judges" : item.toLowerCase()}`;
-              return (
-                <a
-                  key={item}
-                  href={href}
-                  className="relative py-1 hover:text-[var(--color-primary)] transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[var(--color-primary)] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  {item}
-                </a>
-              );
-            })}
+          <nav className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest font-mono-accent">
+            <a href="#how-it-works" className="hover:text-[#f5c400] transition-colors hover:underline underline-offset-4">How It Works</a>
+            <a href="#prizes" className="hover:text-[#f5c400] transition-colors hover:underline underline-offset-4">Prizes</a>
+            <a href="#judges" className="hover:text-[#f5c400] transition-colors hover:underline underline-offset-4">Panel</a>
+            <a href="#schedule" className="hover:text-[#f5c400] transition-colors hover:underline underline-offset-4">Schedule</a>
+            <a href="#faq" className="hover:text-[#f5c400] transition-colors hover:underline underline-offset-4">FAQ</a>
           </nav>
-          <Link href="/register" className="btn-primary text-sm py-2.5 px-5">
+          <Link href="/register" className="btn-primary text-xs py-2.5 px-5">
             Register →
           </Link>
         </div>
       </header>
-    </>
+    </div>
   );
 }
