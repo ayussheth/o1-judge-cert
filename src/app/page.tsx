@@ -5,6 +5,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import IconRegister from "@/components/icons/IconRegister";
+import IconJudge from "@/components/icons/IconJudge";
+import IconCertificate from "@/components/icons/IconCertificate";
+import IconPrizes from "@/components/icons/IconPrizes";
+import IconSchedule from "@/components/icons/IconSchedule";
+import IconArrow from "@/components/icons/IconArrow";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -19,13 +25,15 @@ const SPEAKERS = [
   { name: "Arjun Mehta", role: "Program Director", org: "Danveer Technologies", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=ArjunMehta&backgroundColor=c0aede" },
 ];
 
+const heroWords = ["The", "World's", "First"];
+
 export default function Home() {
   return (
     <>
       <Header />
       <main>
 
-        {/* HERO — whitehouse.gov style */}
+        {/* HERO — whitehouse.gov style with word-by-word animation */}
         <section className="bg-white border-b border-gray-200 py-20 px-6">
           <div className="max-w-5xl mx-auto">
             <motion.div initial="hidden" animate="show" variants={stagger}>
@@ -35,10 +43,28 @@ export default function Home() {
                 <div className="h-px flex-1 bg-[#B22234]" />
               </motion.div>
 
-              <motion.h1 variants={fadeUp} className="font-serif text-5xl md:text-7xl font-black text-[#002868] leading-tight mb-6 text-center">
-                The World&apos;s First<br />
-                <span className="text-[#B22234]">Judgeathon.</span>
-              </motion.h1>
+              <h1 className="font-serif text-5xl md:text-7xl font-black text-[#002868] leading-tight mb-6 text-center">
+                {heroWords.map((word, i) => (
+                  <motion.span
+                    key={word}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 + i * 0.15 }}
+                    className="inline-block mr-4"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <br />
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.75 }}
+                  className="text-[#B22234] inline-block"
+                >
+                  Judgeathon.
+                </motion.span>
+              </h1>
 
               <motion.p variants={fadeUp} className="text-xl text-gray-600 max-w-2xl mx-auto text-center mb-3 leading-relaxed">
                 No hackers. No teams. No code.<br/>
@@ -50,8 +76,9 @@ export default function Home() {
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/register" className="btn-primary text-sm py-4 px-10">
+                <Link href="/register" className="btn-primary text-sm py-4 px-10 inline-flex items-center gap-2 justify-center">
                   Apply as Judge
+                  <IconArrow size={18} color="white" />
                 </Link>
                 <a href="#how-it-works" className="btn-outline text-sm py-4 px-10">
                   Learn More
@@ -97,13 +124,13 @@ export default function Home() {
             </motion.div>
             <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
               {[
-                { step: "01", title: "Register", desc: "Submit credentials. Our team verifies your background within 48 hours.", icon: "📋" },
-                { step: "02", title: "Hack as a Judge", desc: "Evaluate 5 absurd challenges. Score fast. This is your hack.", icon: "⚖️" },
-                { step: "03", title: "Collect Your Visa", desc: "Complete evaluations and receive your approval letter + ICE Airways boarding pass.", icon: "🏛️" },
+                { step: "01", title: "Register", desc: "Submit credentials. Our team verifies your background within 48 hours.", Icon: IconRegister },
+                { step: "02", title: "Hack as a Judge", desc: "Evaluate 5 absurd challenges. Score fast. This is your hack.", Icon: IconJudge },
+                { step: "03", title: "Collect Your Visa", desc: "Complete evaluations and receive your approval letter + ICE Airways boarding pass.", Icon: IconCertificate },
               ].map((s) => (
                 <motion.div key={s.step} variants={fadeUp} className="card">
                   <div className="flex items-start gap-4">
-                    <span className="text-3xl">{s.icon}</span>
+                    <s.Icon size={36} color="#002868" />
                     <div>
                       <p className="font-mono-accent text-xs text-[#B22234] mb-1">STEP {s.step}</p>
                       <h3 className="font-serif text-lg font-bold text-[#002868] mb-2">{s.title}</h3>
@@ -125,12 +152,14 @@ export default function Home() {
             </motion.div>
             <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
               {[
-                { rank: "1st Place", emoji: "🥇", title: "O1 Visa Sponsorship", desc: "Extraordinary ability letter + $185K offer, San Francisco. ICE Airways™ one-way flight included.", accent: "border-t-[#f5c400]" },
-                { rank: "2nd Place", emoji: "🥈", title: "H-1B Petition", desc: "Specialty occupation sponsorship + 3-year initial period + employer-of-record setup.", accent: "border-t-[#002868]" },
-                { rank: "3rd Place", emoji: "🥉", title: "Asylum", desc: "Immediate protection + work authorisation + pathway to green card. Valid while supplies last.", accent: "border-t-[#B22234]" },
+                { rank: "1st Place", title: "O1 Visa Sponsorship", desc: "Extraordinary ability letter + $185K offer, San Francisco. ICE Airways™ one-way flight included.", accent: "border-t-[#f5c400]", iconColor: "#f5c400" },
+                { rank: "2nd Place", title: "H-1B Petition", desc: "Specialty occupation sponsorship + 3-year initial period + employer-of-record setup.", accent: "border-t-[#002868]", iconColor: "#002868" },
+                { rank: "3rd Place", title: "Asylum", desc: "Immediate protection + work authorisation + pathway to green card. Valid while supplies last.", accent: "border-t-[#B22234]", iconColor: "#B22234" },
               ].map((p) => (
                 <motion.div key={p.rank} variants={fadeUp} className={`card ${p.accent}`}>
-                  <p className="text-3xl mb-3">{p.emoji}</p>
+                  <div className="mb-3">
+                    <IconPrizes size={36} color={p.iconColor} />
+                  </div>
                   <p className="font-mono-accent text-xs tracking-widest uppercase text-gray-400 mb-1">{p.rank}</p>
                   <h3 className="font-serif text-xl font-bold text-[#002868] mb-2">{p.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{p.desc}</p>
@@ -173,14 +202,16 @@ export default function Home() {
             </motion.div>
             <motion.div className="space-y-0 border border-gray-200" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
               {[
-                { time: "Apr 1 · 12:00 AM", event: "Judgeathon Opens", note: "Registration goes live", icon: "🚀" },
-                { time: "Apr 1 · 9:00 AM", event: "Challenge Panel Released", note: "5 absurd challenges unlocked", icon: "📂" },
-                { time: "Apr 1 · 6:00 PM", event: "Midpoint Check", note: "Leaderboard published", icon: "📊" },
-                { time: "Apr 2 · 11:59 PM", event: "Judgeathon Closes", note: "All submissions final", icon: "🔒" },
-                { time: "Apr 3 · 12:00 AM", event: "Winners Announced", note: "Approval letters dispatched", icon: "🏛️" },
+                { time: "Apr 1 · 12:00 AM", event: "Judgeathon Opens", note: "Registration goes live" },
+                { time: "Apr 1 · 9:00 AM", event: "Challenge Panel Released", note: "5 absurd challenges unlocked" },
+                { time: "Apr 1 · 6:00 PM", event: "Midpoint Check", note: "Leaderboard published" },
+                { time: "Apr 2 · 11:59 PM", event: "Judgeathon Closes", note: "All submissions final" },
+                { time: "Apr 3 · 12:00 AM", event: "Winners Announced", note: "Approval letters dispatched" },
               ].map((s, i) => (
                 <motion.div key={s.time} variants={fadeUp} className={`flex gap-4 items-center px-6 py-5 bg-white ${i !== 4 ? 'border-b border-gray-100' : ''}`}>
-                  <span className="text-xl w-8">{s.icon}</span>
+                  <div className="w-8">
+                    <IconSchedule size={24} color="#002868" />
+                  </div>
                   <div className="font-mono-accent text-xs text-[#B22234] w-36 shrink-0 uppercase tracking-wide">{s.time}</div>
                   <div>
                     <p className="font-serif font-bold text-sm text-[#002868]">{s.event}</p>
@@ -227,8 +258,9 @@ export default function Home() {
             <motion.h2 variants={fadeUp} className="font-serif text-5xl font-black mb-4">Ready to judge?</motion.h2>
             <motion.p variants={fadeUp} className="text-blue-200 mb-10 text-lg">Applications close April 2. Visa expires same day.</motion.p>
             <motion.div variants={fadeUp}>
-              <Link href="/register" className="inline-block bg-[#B22234] text-white font-bold uppercase tracking-widest text-sm py-4 px-14 rounded-full hover:bg-[#8b1a27] transition-colors">
-                Apply as Judge →
+              <Link href="/register" className="inline-flex items-center gap-2 bg-[#B22234] text-white font-bold uppercase tracking-widest text-sm py-4 px-14 rounded-full hover:bg-[#8b1a27] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-500/20">
+                Apply as Judge
+                <IconArrow size={18} color="white" />
               </Link>
             </motion.div>
           </motion.div>

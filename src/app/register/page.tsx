@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Logo from "@/components/Logo";
+import IconCertificate from "@/components/icons/IconCertificate";
+import IconPrizes from "@/components/icons/IconPrizes";
+import IconArrow from "@/components/icons/IconArrow";
 
 const EXPERTISE_OPTIONS = [
   "AI/ML",
@@ -13,6 +16,12 @@ const EXPERTISE_OPTIONS = [
   "Product",
   "Growth",
 ];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+const stagger = { show: { transition: { staggerChildren: 0.08 } } };
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -41,59 +50,91 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left panel — dark */}
+      {/* Left panel — navy theme */}
       <motion.div
-        className="md:w-[45%] bg-[#0a0a14] text-white p-10 md:p-16 flex flex-col justify-between relative overflow-hidden"
+        className="md:w-[45%] bg-[#002868] text-white p-10 md:p-16 flex flex-col justify-between relative overflow-hidden"
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
         {/* Subtle gradient glow */}
-        <div className="pointer-events-none absolute -top-32 -right-32 w-[400px] h-[400px] rounded-full bg-indigo-600/20 blur-3xl" />
+        <div className="pointer-events-none absolute -top-32 -right-32 w-[400px] h-[400px] rounded-full bg-[#B22234]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full bg-white/5 blur-3xl" />
 
         <div className="relative z-10">
-          <div className="mb-12">
-            <Logo width={40} height={40} />
-          </div>
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Logo width={40} height={40} dark />
+          </motion.div>
 
-          <h1 className="text-4xl md:text-5xl font-black leading-tight mb-6 tracking-tight">
-            Prove your<br />
-            extraordinary<br />
-            <span className="gradient-text">stupidity.</span>
-          </h1>
+          <motion.h1
+            className="text-4xl md:text-5xl font-black leading-tight mb-6 tracking-tight font-serif"
+            initial="hidden"
+            animate="show"
+            variants={stagger}
+          >
+            <motion.span variants={fadeUp} className="block">Prove your</motion.span>
+            <motion.span variants={fadeUp} className="block">extraordinary</motion.span>
+            <motion.span variants={fadeUp} className="block text-[#B22234]">stupidity.</motion.span>
+          </motion.h1>
 
-          <p className="text-slate-400 text-sm leading-relaxed mb-10 max-w-sm">
+          <motion.p
+            className="text-blue-200 text-sm leading-relaxed mb-10 max-w-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
             Complete your application to join the Judgeathon 2026. Every judge who completes their evaluation receives:
-          </p>
+          </motion.p>
 
-          <ul className="space-y-4 text-sm">
-            <li className="flex items-start gap-3">
-              <span className="text-xl mt-0.5">🥇</span>
+          <motion.ul
+            className="space-y-4 text-sm"
+            initial="hidden"
+            animate="show"
+            variants={stagger}
+          >
+            <motion.li variants={fadeUp} className="flex items-start gap-3">
+              <div className="mt-0.5">
+                <IconPrizes size={28} color="#f5c400" />
+              </div>
               <div>
                 <p className="font-semibold text-white">O1 Extraordinary Ability Letter</p>
-                <p className="text-slate-500 text-xs">Issued by Danveer Technologies</p>
+                <p className="text-blue-300 text-xs">Issued by Danveer Technologies</p>
               </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-xl mt-0.5">✈️</span>
+            </motion.li>
+            <motion.li variants={fadeUp} className="flex items-start gap-3">
+              <div className="mt-0.5">
+                <IconArrow size={28} color="#f5c400" />
+              </div>
               <div>
                 <p className="font-semibold text-white">ICE Airways™ One-Way Flight</p>
-                <p className="text-slate-500 text-xs">Seat O1-A · SFO · Class: Extraordinary</p>
+                <p className="text-blue-300 text-xs">Seat O1-A · SFO · Class: Extraordinary</p>
               </div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-xl mt-0.5">💼</span>
+            </motion.li>
+            <motion.li variants={fadeUp} className="flex items-start gap-3">
+              <div className="mt-0.5">
+                <IconCertificate size={28} color="#f5c400" />
+              </div>
               <div>
                 <p className="font-semibold text-white">$185K Offer Letter</p>
-                <p className="text-slate-500 text-xs">San Francisco · Danveer Technologies HQ</p>
+                <p className="text-blue-300 text-xs">San Francisco · Danveer Technologies HQ</p>
               </div>
-            </li>
-          </ul>
+            </motion.li>
+          </motion.ul>
         </div>
 
-        <p className="text-[10px] text-slate-600 mt-10 relative z-10">
+        <motion.p
+          className="text-[10px] text-blue-400 mt-10 relative z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
           All prizes fictional. Expires April 2, 2026.
-        </p>
+        </motion.p>
       </motion.div>
 
       {/* Right panel — form */}
@@ -104,14 +145,32 @@ export default function RegisterPage() {
         transition={{ duration: 0.5, delay: 0.1 }}
       >
         <div className="w-full max-w-md">
-          <h2 className="text-2xl font-bold text-[var(--color-navy)] mb-1">Judge Application</h2>
-          <p className="text-gray-400 text-sm mb-8">
+          <motion.h2
+            className="text-2xl font-bold text-[#002868] mb-1 font-serif"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            Judge Application
+          </motion.h2>
+          <motion.p
+            className="text-gray-400 text-sm mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             All fields marked with * are required.
-          </p>
+          </motion.p>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <motion.form
+            onSubmit={handleSubmit}
+            className="space-y-5"
+            initial="hidden"
+            animate="show"
+            variants={stagger}
+          >
             {/* Floating label inputs */}
-            <div className="relative">
+            <motion.div variants={fadeUp} className="relative">
               <input
                 name="name"
                 type="text"
@@ -119,12 +178,12 @@ export default function RegisterPage() {
                 placeholder=" "
                 className="input-field peer pt-5 pb-2"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[var(--color-primary)] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 Full Name *
               </label>
-            </div>
+            </motion.div>
 
-            <div className="relative">
+            <motion.div variants={fadeUp} className="relative">
               <input
                 name="email"
                 type="email"
@@ -132,24 +191,24 @@ export default function RegisterPage() {
                 placeholder=" "
                 className="input-field peer pt-5 pb-2"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[var(--color-primary)] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 Email Address *
               </label>
-            </div>
+            </motion.div>
 
-            <div className="relative">
+            <motion.div variants={fadeUp} className="relative">
               <input
                 name="linkedin"
                 type="url"
                 placeholder=" "
                 className="input-field peer pt-5 pb-2"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[var(--color-primary)] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 LinkedIn Profile
               </label>
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div variants={fadeUp}>
               <label className="block text-xs font-medium text-slate-500 mb-1.5">
                 Area of Expertise *
               </label>
@@ -161,9 +220,9 @@ export default function RegisterPage() {
                   </option>
                 ))}
               </select>
-            </div>
+            </motion.div>
 
-            <div className="relative">
+            <motion.div variants={fadeUp} className="relative">
               <input
                 name="experience"
                 type="number"
@@ -173,12 +232,12 @@ export default function RegisterPage() {
                 placeholder=" "
                 className="input-field peer pt-5 pb-2"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[var(--color-primary)] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 Years of Experience *
               </label>
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div variants={fadeUp}>
               <label className="block text-xs font-medium text-slate-500 mb-1.5">
                 Why do you want to judge?
               </label>
@@ -188,35 +247,40 @@ export default function RegisterPage() {
                 className="input-field resize-none"
                 placeholder="Tell us about your motivation..."
               />
-            </div>
+            </motion.div>
 
-            <div className="flex items-start gap-3">
+            <motion.div variants={fadeUp} className="flex items-start gap-3">
               <input
                 type="checkbox"
                 name="consent"
                 required
-                className="mt-1 accent-[var(--color-primary)]"
+                className="mt-1 accent-[#B22234]"
               />
               <label className="text-xs text-gray-500 leading-relaxed">
                 I consent to visa sponsorship consideration and acknowledge that
                 my judging performance will be evaluated as part of the O1 visa
                 extraordinary ability assessment. *
               </label>
-            </div>
+            </motion.div>
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="btn-primary w-full py-3.5 disabled:opacity-60"
-            >
-              {submitting ? "Submitting Application..." : "Submit Application →"}
-            </button>
+            <motion.div variants={fadeUp}>
+              <motion.button
+                type="submit"
+                disabled={submitting}
+                className="btn-primary w-full py-3.5 disabled:opacity-60 inline-flex items-center justify-center gap-2"
+                whileHover={{ y: -1, boxShadow: "0 4px 16px rgba(178,34,52,0.3)" }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {submitting ? "Submitting Application..." : "Submit Application"}
+                {!submitting && <IconArrow size={16} color="white" />}
+              </motion.button>
+            </motion.div>
 
-            <p className="text-[10px] text-gray-400 text-center">
+            <motion.p variants={fadeUp} className="text-[10px] text-gray-400 text-center">
               By submitting, you agree to Danveer&apos;s Terms of Service and
               Privacy Policy. This is a fictional judging program for entertainment purposes only.
-            </p>
-          </form>
+            </motion.p>
+          </motion.form>
         </div>
       </motion.div>
     </div>

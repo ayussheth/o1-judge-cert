@@ -37,7 +37,7 @@ export default function Header() {
             </svg>
             <div>
               <p className="font-serif text-[13px] font-black tracking-tight uppercase text-[#002868] leading-none">Danveer</p>
-              <p className="font-mono-accent text-[9px] tracking-[0.1em] text-gray-400 uppercase">Washington, D.C.</p>
+              <p className="font-mono-accent text-[9px] tracking-[0.1em] text-gray-400 uppercase">Bangalore, India</p>
             </div>
           </Link>
 

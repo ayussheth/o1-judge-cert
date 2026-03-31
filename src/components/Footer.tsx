@@ -21,7 +21,7 @@ export default function Footer() {
               </svg>
               <div>
                 <p className="font-serif font-bold text-sm">Danveer Technologies</p>
-                <p className="font-mono-accent text-xs text-blue-300 tracking-widest uppercase">Washington, D.C.</p>
+                <p className="font-mono-accent text-xs text-blue-300 tracking-widest uppercase">Bangalore, India</p>
               </div>
             </div>
             <p className="text-blue-200 text-sm leading-relaxed">

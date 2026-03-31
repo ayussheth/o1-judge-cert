@@ -5,6 +5,10 @@ import { motion } from "framer-motion";
 import Logo from "@/components/Logo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import IconCertificate from "@/components/icons/IconCertificate";
+import IconPrizes from "@/components/icons/IconPrizes";
+import IconArrow from "@/components/icons/IconArrow";
+import IconChallenges from "@/components/icons/IconChallenges";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -14,6 +18,47 @@ const fadeUp = {
 const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
+
+// Confetti-like floating elements
+function ConfettiElements() {
+  const elements = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    delay: Math.random() * 3,
+    duration: 3 + Math.random() * 4,
+    size: 4 + Math.random() * 8,
+    color: ["#B22234", "#f5c400", "#002868", "#ffffff"][Math.floor(Math.random() * 4)],
+  }));
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {elements.map((el) => (
+        <motion.div
+          key={el.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${el.x}%`,
+            width: el.size,
+            height: el.size,
+            backgroundColor: el.color,
+            opacity: 0.3,
+          }}
+          animate={{
+            y: [-20, 600],
+            rotate: [0, 360],
+            opacity: [0, 0.4, 0],
+          }}
+          transition={{
+            duration: el.duration,
+            repeat: Infinity,
+            delay: el.delay,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function ResultsPage() {
   const [judgeName, setJudgeName] = useState("Applicant");
@@ -92,9 +137,9 @@ Your participation in the Danveer Judgeathon 2026 has been assessed and found to
   - Demonstration of field expertise and analytical ability
 
 In recognition of this achievement, you are entitled to:
-  🥇 One (1) O1 Extraordinary Ability Recommendation Letter
-  ✈️ One (1) ICE Airways™ One-Way Flight to San Francisco (Seat O1-A)
-  📜 One (1) Certificate of Extraordinary Ability
+  - One (1) O1 Extraordinary Ability Recommendation Letter
+  - One (1) ICE Airways One-Way Flight to San Francisco (Seat O1-A)
+  - One (1) Certificate of Extraordinary Ability
 
 This notice is valid until April 2, 2026.
 
@@ -201,10 +246,9 @@ Reference: ${caseNumber}`;
     <>
       <Header />
 
-      {/* ── HERO SECTION ── dark, full width */}
-      <section className="relative overflow-hidden bg-[#0a0a14] py-24 px-6">
-        {/* Radial glow */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-indigo-600/15 blur-3xl" />
+      {/* HERO SECTION — dark navy with confetti */}
+      <section className="relative overflow-hidden bg-[#002868] py-24 px-6">
+        <ConfettiElements />
 
         <motion.div
           className="max-w-3xl mx-auto text-center relative z-10"
@@ -212,23 +256,31 @@ Reference: ${caseNumber}`;
           animate="show"
           variants={stagger}
         >
-          <motion.p variants={fadeUp} className="text-6xl mb-6">🎉</motion.p>
+          <motion.div variants={fadeUp} className="mb-6">
+            <IconCertificate size={64} color="#f5c400" />
+          </motion.div>
           <motion.h1
             variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white leading-tight mb-4"
+            className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 font-serif"
           >
             Congratulations, {judgeName}!
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-lg text-slate-400 mb-8">
+          <motion.p variants={fadeUp} className="text-lg text-blue-200 mb-8">
             Your extraordinary stupidity has been officially recognized
           </motion.p>
 
-          {/* Animated APPROVED badge */}
+          {/* Animated APPROVED badge — pulsing */}
           <motion.div
             variants={fadeUp}
             className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-6 py-2.5"
+            animate={{ boxShadow: ["0 0 0 0 rgba(52,211,153,0)", "0 0 0 8px rgba(52,211,153,0.1)", "0 0 0 0 rgba(52,211,153,0)"] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+            <motion.span
+              className="w-2.5 h-2.5 rounded-full bg-emerald-400"
+              animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
             <span className="text-emerald-400 font-bold text-sm tracking-widest uppercase">
               Approved
             </span>
@@ -236,11 +288,14 @@ Reference: ${caseNumber}`;
         </motion.div>
       </section>
 
-      {/* ── APPROVAL LETTER ── cream/premium */}
-      <section className="py-16 px-6 bg-slate-50">
+      {/* Red divider */}
+      <div className="h-2 bg-[#B22234]" />
+
+      {/* APPROVAL LETTER — premium cream */}
+      <section className="py-16 px-6 bg-gray-50">
         <motion.div
           ref={letterRef}
-          className="max-w-3xl mx-auto bg-[#faf8f3] rounded-2xl shadow-xl shadow-black/5 p-10 md:p-14 relative"
+          className="max-w-3xl mx-auto bg-[#faf8f3] shadow-xl shadow-black/5 p-10 md:p-14 relative"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -250,10 +305,10 @@ Reference: ${caseNumber}`;
             <div className="flex items-center gap-3">
               <Logo width={36} height={36} />
               <div>
-                <p className="font-display text-lg font-bold text-[var(--color-navy)]">
+                <p className="font-serif text-lg font-bold text-[#002868]">
                   Danveer Technologies, Inc.
                 </p>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-gray-400">
                   Extraordinary Ability Recognition Program
                 </p>
               </div>
@@ -276,44 +331,44 @@ Reference: ${caseNumber}`;
 
           {/* Document title */}
           <div className="text-center mb-10">
-            <h1 className="font-display text-2xl font-bold text-[var(--color-navy)] tracking-wide">
+            <h1 className="font-serif text-2xl font-bold text-[#002868] tracking-wide">
               JUDGEATHON 2026
             </h1>
-            <h2 className="font-display text-xl text-[var(--color-navy)] mt-1">
+            <h2 className="font-serif text-xl text-[#002868] mt-1">
               APPROVAL NOTICE
             </h2>
           </div>
 
           {/* Case details */}
-          <div className="grid grid-cols-2 gap-4 text-sm mb-10 bg-white/60 p-5 rounded-xl border border-amber-100/50">
+          <div className="grid grid-cols-2 gap-4 text-sm mb-10 bg-white/60 p-5 border border-amber-100/50">
             <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider">Reference</p>
-              <p className="font-mono font-semibold text-[var(--color-navy)]">{caseNumber}</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-mono-accent">Reference</p>
+              <p className="font-mono font-semibold text-[#002868]">{caseNumber}</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider">Notice Date</p>
-              <p className="font-semibold text-[var(--color-navy)]">{formattedDate}</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-mono-accent">Notice Date</p>
+              <p className="font-semibold text-[#002868]">{formattedDate}</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider">Recipient</p>
-              <p className="font-semibold text-[var(--color-navy)]">{judgeName}</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-mono-accent">Recipient</p>
+              <p className="font-semibold text-[#002868]">{judgeName}</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider">Classification</p>
-              <p className="font-semibold text-[var(--color-navy)]">Extraordinary Stupidity (Self-Assessed)</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-mono-accent">Classification</p>
+              <p className="font-semibold text-[#002868]">Extraordinary Stupidity (Self-Assessed)</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider">Issued By</p>
-              <p className="font-semibold text-[var(--color-navy)]">Danveer Technologies, Inc.</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-mono-accent">Issued By</p>
+              <p className="font-semibold text-[#002868]">Danveer Technologies, Inc.</p>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider">Valid Until</p>
-              <p className="font-semibold text-[var(--color-navy)]">April 2, 2026</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-mono-accent">Valid Until</p>
+              <p className="font-semibold text-[#002868]">April 2, 2026</p>
             </div>
           </div>
 
           {/* Letter body */}
-          <div className="text-sm text-gray-700 space-y-4 leading-relaxed" style={{ fontFamily: "Georgia, serif" }}>
+          <div className="text-sm text-gray-700 space-y-4 leading-relaxed font-serif">
             <p>Dear {judgeName},</p>
             <p>
               Danveer Technologies, Inc. hereby confirms that your contributions as a judge in the
@@ -322,10 +377,10 @@ Reference: ${caseNumber}`;
             </p>
             <p>Your recognition entitles you to the following:</p>
             <ul className="list-none space-y-2 pl-2">
-              <li>🥇 <strong>O1 Extraordinary Ability Letter</strong> — issued by Danveer Technologies</li>
-              <li>✈️ <strong>ICE Airways™ Flight Voucher</strong> — one-way to San Francisco (Seat O1-A, Class: Extraordinary)</li>
-              <li>📜 <strong>Certificate of Extraordinary Ability</strong> — suitable for framing</li>
-              <li>💼 <strong>$185,000 offer letter</strong> — allocated for your sponsored position, SF</li>
+              <li className="flex items-center gap-2"><IconPrizes size={18} color="#f5c400" /> <strong>O1 Extraordinary Ability Letter</strong> — issued by Danveer Technologies</li>
+              <li className="flex items-center gap-2"><IconArrow size={18} color="#002868" /> <strong>ICE Airways™ Flight Voucher</strong> — one-way to San Francisco (Seat O1-A, Class: Extraordinary)</li>
+              <li className="flex items-center gap-2"><IconCertificate size={18} color="#002868" /> <strong>Certificate of Extraordinary Ability</strong> — suitable for framing</li>
+              <li className="flex items-center gap-2"><IconPrizes size={18} color="#B22234" /> <strong>$185,000 offer letter</strong> — allocated for your sponsored position, SF</li>
             </ul>
             <p>
               Please retain this notice. Your ICE Airways™ boarding pass has been prepared and
@@ -336,12 +391,12 @@ Reference: ${caseNumber}`;
           {/* Signatures */}
           <div className="mt-12 flex justify-between items-end">
             <div className="text-sm">
-              <p className="text-slate-400 italic" style={{ fontFamily: "Georgia, serif" }}>Sincerely,</p>
+              <p className="text-gray-400 italic font-serif">Sincerely,</p>
               <div className="mt-8">
-                <p className="font-display text-lg italic text-[var(--color-navy)] mb-1">A. Mehta</p>
+                <p className="font-serif text-lg italic text-[#002868] mb-1">A. Mehta</p>
                 <div className="border-t border-amber-300 pt-1 w-48">
-                  <p className="font-semibold text-[var(--color-navy)] text-sm">Program Director</p>
-                  <p className="text-xs text-slate-400">Danveer Technologies, Inc.</p>
+                  <p className="font-semibold text-[#002868] text-sm">Program Director</p>
+                  <p className="text-xs text-gray-400">Danveer Technologies, Inc.</p>
                 </div>
               </div>
             </div>
@@ -357,88 +412,122 @@ Reference: ${caseNumber}`;
 
           {/* Fine print */}
           <div className="mt-10 pt-4 border-t border-amber-100/50">
-            <p className="text-[7px] text-slate-400 leading-relaxed">
+            <p className="text-[7px] text-gray-400 leading-relaxed">
               This document is issued by Danveer Technologies, Inc. for entertainment purposes only as part of Judgeathon 2026. It does not constitute a legal visa, immigration document, flight ticket, employment offer, or government communication of any kind. No affiliation with any government agency. Valid until April 2, 2026. ICE Airways™ is a fictional airline brand. Danveer Technologies is a fictional company. Share responsibly.
             </p>
           </div>
         </motion.div>
       </section>
 
-      {/* ── PERKS BANNER ── */}
-      <section className="bg-[#0a0a14] py-14 px-6">
+      {/* PERKS BANNER — navy theme */}
+      <section className="bg-[#002868] py-14 px-6">
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs font-bold tracking-widest uppercase text-indigo-400 mb-6 text-center">
+          <p className="text-xs font-bold tracking-widest uppercase text-[#f5c400] mb-6 text-center font-mono-accent">
             Your Perks Package
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-5"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={stagger}
+          >
             {[
-              { emoji: "✈️", title: "ICE Airways™ Flight", desc: "One-way · SFO · Seat O1-A" },
-              { emoji: "🥇", title: "O1 Letter", desc: "Extraordinary ability recognized" },
-              { emoji: "💼", title: "$185K Offer", desc: "San Francisco · Danveer HQ" },
+              { title: "ICE Airways™ Flight", desc: "One-way · SFO · Seat O1-A", Icon: IconArrow },
+              { title: "O1 Letter", desc: "Extraordinary ability recognized", Icon: IconPrizes },
+              { title: "$185K Offer", desc: "San Francisco · Danveer HQ", Icon: IconCertificate },
             ].map((perk) => (
-              <div
+              <motion.div
                 key={perk.title}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 text-center"
+                variants={fadeUp}
+                className="bg-white/5 border border-white/10 p-5 text-center"
               >
-                <span className="text-3xl block mb-3">{perk.emoji}</span>
+                <div className="flex justify-center mb-3">
+                  <perk.Icon size={36} color="#f5c400" />
+                </div>
                 <p className="font-semibold text-white text-sm">{perk.title}</p>
-                <p className="text-slate-500 text-xs mt-1">{perk.desc}</p>
-              </div>
+                <p className="text-blue-300 text-xs mt-1">{perk.desc}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── DOWNLOAD BUTTONS ── */}
-      <section className="py-14 px-6">
+      <div className="h-1 bg-[#B22234]" />
+
+      {/* DOWNLOAD BUTTONS */}
+      <section className="py-14 px-6 bg-white">
         <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <button onClick={() => downloadPDF("approval")} className="btn-primary py-4 text-sm">
+          <motion.button
+            onClick={() => downloadPDF("approval")}
+            className="btn-primary py-4 text-sm"
+            whileHover={{ y: -2, boxShadow: "0 4px 16px rgba(178,34,52,0.3)" }}
+            whileTap={{ scale: 0.98 }}
+          >
             Download Approval Letter
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => downloadPDF("flight")}
-            className="bg-white border-2 border-slate-200 rounded-xl py-4 text-center hover:border-indigo-300 hover:shadow-md cursor-pointer font-semibold text-sm text-[var(--color-navy)] transition-all"
+            className="bg-white border-2 border-[#002868] py-4 text-center hover:bg-[#002868] hover:text-white cursor-pointer font-semibold text-sm text-[#002868] transition-all"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
           >
-            ✈️ ICE Airways Boarding Pass
-          </button>
-          <button
+            ICE Airways Boarding Pass
+          </motion.button>
+          <motion.button
             onClick={() => downloadPDF("certificate")}
-            className="bg-white border-2 border-slate-200 rounded-xl py-4 text-center hover:border-indigo-300 hover:shadow-md cursor-pointer font-semibold text-sm text-[var(--color-navy)] transition-all"
+            className="bg-white border-2 border-[#002868] py-4 text-center hover:bg-[#002868] hover:text-white cursor-pointer font-semibold text-sm text-[#002868] transition-all"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
           >
-            📜 Ability Certificate
-          </button>
+            Ability Certificate
+          </motion.button>
         </div>
       </section>
 
-      {/* ── TWEET CTA ── */}
-      <section className="bg-[#0a0a14] py-20 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-5xl mb-6">🐦</p>
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
+      {/* TWEET CTA — navy bg with red button */}
+      <section className="bg-[#002868] py-20 px-6">
+        <motion.div
+          className="max-w-2xl mx-auto text-center"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={stagger}
+        >
+          <motion.div variants={fadeUp} className="flex justify-center mb-6">
+            <IconChallenges size={48} color="#f5c400" />
+          </motion.div>
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-black text-white mb-3 font-serif">
             The world deserves to know.
-          </h2>
-          <p className="text-slate-500 text-sm mb-10 max-w-md mx-auto">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-blue-200 text-sm mb-10 max-w-md mx-auto">
             Screenshot the letter, download the boarding pass, and share it. Your extraordinary stupidity must not go unnoticed.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
+          </motion.p>
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.button
               onClick={shareTwitter}
-              className="inline-flex items-center justify-center gap-2 bg-[#1d9bf0] hover:bg-[#1a8cd8] text-white font-bold py-4 px-10 rounded-xl transition-colors text-sm shadow-lg shadow-blue-500/20"
+              className="inline-flex items-center justify-center gap-2 bg-[#B22234] hover:bg-[#8b1a27] text-white font-bold py-4 px-10 rounded-full transition-colors text-sm"
+              whileHover={{ y: -2, boxShadow: "0 4px 16px rgba(178,34,52,0.4)" }}
+              whileTap={{ scale: 0.98 }}
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
               Tweet My Approval
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={shareLinkedIn}
-              className="bg-white/10 border border-white/20 text-white font-semibold py-4 px-8 rounded-xl hover:bg-white/20 transition-colors text-sm"
+              className="bg-white/10 border border-white/20 text-white font-semibold py-4 px-8 rounded-full hover:bg-white/20 transition-colors text-sm"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
             >
               Share on LinkedIn
-            </button>
-          </div>
-        </div>
+            </motion.button>
+          </motion.div>
+        </motion.div>
       </section>
+
+      <div className="h-2 bg-[#B22234]" />
 
       <Footer />
     </>
