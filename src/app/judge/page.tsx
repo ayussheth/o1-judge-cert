@@ -2,300 +2,398 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface Project {
-  name: string;
-  team: string[];
-  hackathon: string;
-  description: string;
-  tags: string[];
-}
-
-const PROJECTS: Project[] = [
+const CHALLENGES = [
   {
-    name: "AI Content Moderation Engine",
-    team: ["Sarah Park", "Omar Elgamal"],
-    hackathon: "Danveer HackStorm 2025",
-    description:
-      "Multi-modal content moderation system combining vision transformers with LLM-based context analysis. Achieves 97.3% accuracy on hate speech detection while reducing false positives by 40% compared to existing solutions.",
-    tags: ["Python", "PyTorch", "FastAPI"],
+    id: 1,
+    type: "rank",
+    emoji: "☁️",
+    instruction: "CAPTCHA CHALLENGE 1 OF 5",
+    question: "Rank these clouds by intelligence.",
+    subtext: "This helps us verify you are not a cloud.",
+    options: [
+      { id: "a", label: "Cloud A", description: "Cumulus. Confident. Has a newsletter.", img: "https://images.unsplash.com/photo-1504608524841-42584120d693?w=300&h=200&fit=crop" },
+      { id: "b", label: "Cloud B", description: "Stratus. Overthinks everything. Probably a PM.", img: "https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6?w=300&h=200&fit=crop" },
+      { id: "c", label: "Cloud C", description: "Cumulonimbus. Unhinged. O1 eligible.", img: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=300&h=200&fit=crop" },
+    ],
+    answerType: "rank",
+    correctHint: "The stormiest cloud always gets the visa.",
   },
   {
-    name: "Web3 Social Graph",
-    team: ["Priya Sharma", "Alex Volkov", "Kim Tanaka", "Jordan Reeves"],
-    hackathon: "Danveer BuildAssembly 2025",
-    description:
-      "An open social graph protocol that maps on-chain identity relationships across EVM chains. Includes a recommendation engine for community governance participation based on expertise signals and contribution history.",
-    tags: ["TypeScript", "GraphQL", "Polygon"],
+    id: 2,
+    type: "choice",
+    emoji: "🐦",
+    instruction: "CAPTCHA CHALLENGE 2 OF 5",
+    question: "Which of these pigeons demonstrates extraordinary ability?",
+    subtext: "Select all that apply. There is only one correct answer. Or maybe none. We don't know either.",
+    options: [
+      { id: "a", label: "Kevin", description: "Has been to 14 countries. Mostly airports.", img: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=300&h=200&fit=crop&q=80" },
+      { id: "b", label: "Priya", description: "Delivered mail pre-internet. Awaiting O1 since 1987.", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=300&h=200&fit=crop" },
+      { id: "c", label: "Chad", description: "Thought leader. Published 3 Medium posts.", img: "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=300&h=200&fit=crop" },
+    ],
+    answerType: "single",
+    correctHint: "Priya has more extraordinary ability in her left wing than you have in your entire LinkedIn.",
   },
   {
-    name: "Neural Code Review Assistant",
-    team: ["David Liu", "Amara Osei"],
-    hackathon: "Danveer CodeSprint 2025",
-    description:
-      "IDE plugin that performs real-time code review using fine-tuned models trained on 2M+ merged pull requests. Provides security vulnerability detection, performance suggestions, and architectural feedback inline.",
-    tags: ["Rust", "WASM", "GPT-4"],
+    id: 3,
+    type: "rating",
+    emoji: "🤝",
+    instruction: "CAPTCHA CHALLENGE 3 OF 5",
+    question: "Rate this handshake energy. Be honest.",
+    subtext: "Your O1 application will be partially evaluated based on the accuracy of this rating.",
+    img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=350&fit=crop",
+    criteria: ["Grip Confidence", "Eye Contact (implied)", "Hustle Aura", "Would VC fund these hands?"],
+    answerType: "multi-rating",
   },
   {
-    name: "ClimateFi Carbon Credits",
-    team: ["Elena Rossi", "Tariq Hassan", "Jun Wei"],
-    hackathon: "Danveer EcoHack 2025",
-    description:
-      "Tokenized carbon credit marketplace with satellite-verified reforestation tracking. Uses IoT sensor networks for real-time carbon sequestration measurement and automated credit issuance via smart contracts.",
-    tags: ["Solidity", "IoT", "Next.js"],
+    id: 4,
+    type: "choice",
+    emoji: "🤖",
+    instruction: "CAPTCHA CHALLENGE 4 OF 5",
+    question: "How many of these LinkedIn bios were written by ChatGPT?",
+    subtext: "Hint: All of them were written by humans. Or were they.",
+    options: [
+      { id: "a", label: "0", description: "Pure human delusion" },
+      { id: "b", label: "2", description: "The optimistic answer" },
+      { id: "c", label: "All of them", description: "The correct answer" },
+      { id: "d", label: "What is LinkedIn", description: "Extraordinary ability detected" },
+    ],
+    bios: [
+      "🚀 Passionate builder | Disrupting disruption | Ex-Google, Ex-Meta, Ex-sanity | Building the future one pivot at a time",
+      "Results-driven thought leader leveraging synergistic frameworks to unlock exponential value creation in the B2B SaaS space.",
+      "I help founders find their why so they can build their what and monetize their how. DMs open. No pitches please (send pitches).",
+    ],
+    answerType: "single",
+    correctHint: "The answer is always all of them.",
   },
   {
-    name: "DeFi Insurance Protocol",
-    team: ["Maya Chen", "Raj Krishnan", "Leo Müller"],
-    hackathon: "Danveer FinanceHack 2025",
-    description:
-      "A decentralized insurance protocol that uses on-chain risk modeling to provide parametric coverage for smart contract failures. Features automated claims processing via oracle-verified events and a novel bonding curve for premium pricing.",
-    tags: ["Solidity", "Chainlink", "React"],
+    id: 5,
+    type: "choice",
+    emoji: "💼",
+    instruction: "CAPTCHA CHALLENGE 5 OF 5",
+    question: "Which of these men is most likely to receive an O1 visa?",
+    subtext: "Judge based on vibes alone. Do not think. Trust the process.",
+    options: [
+      { id: "a", label: "Rajesh", description: "17 YOE. 3 patents. Publishes research. Volunteers.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" },
+      { id: "b", label: "Brad", description: "Started a podcast. 1,200 LinkedIn followers. Has opinions.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" },
+      { id: "c", label: "Vikram", description: "Extraordinary ability in being ordinary. Self-assessed.", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face" },
+    ],
+    answerType: "single",
+    correctHint: "Trick question. Brad got it.",
   },
 ];
 
-const CRITERIA = [
-  "Innovation",
-  "Technical Execution",
-  "Market Viability",
-  "Design Quality",
+const ACCENT_COLORS = [
+  "border-l-indigo-400",
+  "border-l-violet-400",
+  "border-l-pink-400",
+  "border-l-emerald-400",
+  "border-l-amber-400",
 ];
-
-const ACCENT_COLORS = ["#6366f1", "#ec4899", "#f59e0b", "#10b981", "#8b5cf6"];
-
-interface ProjectScore {
-  scores: Record<string, number>;
-  comment: string;
-}
-
-type Scores = Record<number, ProjectScore>;
-
-const stagger = {
-  show: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
 
 export default function JudgePage() {
   const router = useRouter();
-  const [judgeName, setJudgeName] = useState("");
-  const [scores, setScores] = useState<Scores>({});
+  const [judgeName, setJudgeName] = useState("Judge");
+  const [current, setCurrent] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, Record<string, number | string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const stored = sessionStorage.getItem("judge");
     if (stored) {
       const data = JSON.parse(stored);
-      setJudgeName(data.name);
+      setJudgeName(data.name || "Judge");
     }
   }, []);
 
-  function setScore(projectIdx: number, criterion: string, value: number) {
-    setScores((prev) => ({
+  const challenge = CHALLENGES[current];
+  const totalAnswered = Object.keys(answers).length;
+
+  function setRating(challengeId: number, criterion: string, val: number) {
+    setAnswers(prev => ({
       ...prev,
-      [projectIdx]: {
-        ...prev[projectIdx],
-        scores: { ...prev[projectIdx]?.scores, [criterion]: value },
-      },
+      [challengeId]: { ...prev[challengeId], [criterion]: val },
     }));
   }
 
-  function setComment(projectIdx: number, value: string) {
-    setScores((prev) => ({
-      ...prev,
-      [projectIdx]: {
-        ...prev[projectIdx],
-        comment: value,
-      },
-    }));
+  function setSingleAnswer(challengeId: number, val: string) {
+    setAnswers(prev => ({ ...prev, [challengeId]: { answer: val } }));
   }
 
-  function allScored(): boolean {
-    return PROJECTS.every((_, idx) =>
-      CRITERIA.every((c) => scores[idx]?.scores?.[c] > 0)
-    );
+  function setRankAnswer(challengeId: number, val: string) {
+    setAnswers(prev => ({ ...prev, [challengeId]: { answer: val } }));
   }
 
-  function scoredCount(): number {
-    return PROJECTS.filter((_, idx) =>
-      CRITERIA.every((c) => scores[idx]?.scores?.[c] > 0)
-    ).length;
+  function isChallengeAnswered(idx: number): boolean {
+    const c = CHALLENGES[idx];
+    const ans = answers[c.id];
+    if (!ans) return false;
+    if (c.answerType === "multi-rating") {
+      return c.criteria ? c.criteria.every(cr => (ans[cr] as number) > 0) : false;
+    }
+    return !!ans.answer;
+  }
+
+  function handleNext() {
+    setRevealed(false);
+    if (current < CHALLENGES.length - 1) {
+      setCurrent(current + 1);
+    } else {
+      handleSubmit();
+    }
   }
 
   function handleSubmit() {
-    if (!allScored()) return;
     setSubmitting(true);
-    sessionStorage.setItem("scores", JSON.stringify(scores));
-    setTimeout(() => {
-      router.push("/results");
-    }, 1200);
+    sessionStorage.setItem("scores", JSON.stringify(answers));
+    setTimeout(() => router.push("/results"), 1200);
   }
+
+  const currentAnswered = isChallengeAnswered(current);
 
   return (
     <>
       <Header />
 
       {/* Sticky progress bar */}
-      <div className="sticky top-[73px] z-40 bg-white/90 backdrop-blur-sm border-b border-slate-100 py-3 px-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold text-[var(--color-navy)]">
-              Project {Math.min(scoredCount() + 1, 5)} of 5
-            </span>
-            <div className="flex gap-1.5">
-              {PROJECTS.map((_, idx) => (
-                <div
-                  key={idx}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                    CRITERIA.every((c) => scores[idx]?.scores?.[c] > 0)
-                      ? "bg-indigo-500"
-                      : "bg-slate-200"
-                  }`}
-                />
-              ))}
-            </div>
+      <div className="sticky top-[104px] z-40 bg-white border-b border-slate-100 shadow-sm">
+        <div className="max-w-3xl mx-auto px-6 py-3 flex items-center justify-between">
+          <p className="text-xs font-medium text-slate-500">
+            Judging as <span className="text-indigo-600 font-bold">{judgeName}</span>
+          </p>
+          <div className="flex items-center gap-2">
+            {CHALLENGES.map((_, i) => (
+              <div
+                key={i}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  i < current ? "bg-indigo-500" :
+                  i === current ? "bg-indigo-400 ring-2 ring-indigo-200" :
+                  "bg-slate-200"
+                }`}
+              />
+            ))}
+            <span className="text-xs text-slate-400 ml-2">{current + 1} / {CHALLENGES.length}</span>
           </div>
-          {judgeName && (
-            <p className="text-xs text-slate-400">
-              Judging as <span className="font-semibold text-[var(--color-navy)]">{judgeName}</span>
-            </p>
-          )}
+        </div>
+        <div className="h-1 bg-slate-100">
+          <div
+            className="h-1 bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500"
+            style={{ width: `${((current + (currentAnswered ? 1 : 0)) / CHALLENGES.length) * 100}%` }}
+          />
         </div>
       </div>
 
-      <main className="py-10 px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            className="space-y-6"
-            initial="hidden"
-            animate="show"
-            variants={stagger}
-          >
-            {PROJECTS.map((project, idx) => (
-              <motion.div
-                key={idx}
-                variants={fadeUp}
-                className="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-              >
-                {/* Colored left accent + content */}
-                <div className="flex">
-                  <div
-                    className="w-1.5 shrink-0"
-                    style={{ backgroundColor: ACCENT_COLORS[idx] }}
-                  />
-                  <div className="flex-1 p-6">
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
-                      <div>
-                        <h2 className="text-lg font-bold text-[var(--color-navy)]">
-                          {project.name}
-                        </h2>
-                        <span className="inline-block text-[10px] font-semibold uppercase tracking-wider bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full mt-1">
-                          {project.hackathon}
-                        </span>
-                      </div>
-                      <div className="flex gap-2 flex-wrap">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs px-2.5 py-1 bg-slate-50 text-slate-500 rounded-md font-medium"
+      <main className="py-12 px-6 min-h-screen bg-slate-50">
+        <div className="max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={`bg-white rounded-2xl border-l-4 ${ACCENT_COLORS[current]} shadow-sm overflow-hidden mb-6`}>
+                {/* Challenge header */}
+                <div className="bg-slate-900 px-8 py-6 text-white">
+                  <p className="text-xs font-bold tracking-widest text-indigo-400 mb-2">{challenge.instruction}</p>
+                  <div className="flex items-start gap-4">
+                    <span className="text-4xl">{challenge.emoji}</span>
+                    <div>
+                      <h2 className="text-2xl font-black leading-tight mb-1">{challenge.question}</h2>
+                      <p className="text-slate-400 text-sm">{challenge.subtext}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-8">
+
+                  {/* Image challenges (clouds, pigeons, handshake) */}
+                  {challenge.type === "rank" && (
+                    <div className="space-y-4">
+                      <p className="text-sm text-slate-500 mb-4">Select the most intelligent cloud:</p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {challenge.options?.map((opt) => (
+                          <button
+                            key={opt.id}
+                            onClick={() => setRankAnswer(challenge.id, opt.id)}
+                            className={`rounded-xl overflow-hidden border-2 transition-all text-left ${
+                              answers[challenge.id]?.answer === opt.id
+                                ? "border-indigo-500 ring-2 ring-indigo-100"
+                                : "border-slate-100 hover:border-indigo-200"
+                            }`}
                           >
-                            {tag}
-                          </span>
+                            <img src={opt.img} alt={opt.label} className="w-full h-36 object-cover" />
+                            <div className="p-3">
+                              <p className="font-bold text-sm text-slate-900">{opt.label}</p>
+                              <p className="text-xs text-slate-400 mt-0.5">{opt.description}</p>
+                            </div>
+                          </button>
                         ))}
                       </div>
                     </div>
+                  )}
 
-                    {/* Team avatars */}
-                    <div className="flex items-center gap-1.5 mb-3">
-                      {project.team.map((member) => (
-                        <div
-                          key={member}
-                          className="w-7 h-7 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-500"
-                          title={member}
+                  {/* LinkedIn bios challenge */}
+                  {challenge.id === 4 && (
+                    <div className="mb-6 space-y-3">
+                      {challenge.bios?.map((bio, i) => (
+                        <div key={i} className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                          <p className="text-xs font-mono text-slate-600 leading-relaxed">&ldquo;{bio}&rdquo;</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Person profile challenge */}
+                  {challenge.id === 5 && challenge.options && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {challenge.options.map((opt) => (
+                        <button
+                          key={opt.id}
+                          onClick={() => setSingleAnswer(challenge.id, opt.id)}
+                          className={`rounded-xl overflow-hidden border-2 transition-all text-center ${
+                            answers[challenge.id]?.answer === opt.id
+                              ? "border-indigo-500 ring-2 ring-indigo-100"
+                              : "border-slate-100 hover:border-indigo-200"
+                          }`}
                         >
-                          {member.split(" ").map((n) => n[0]).join("")}
-                        </div>
-                      ))}
-                      <span className="text-xs text-slate-400 ml-1.5">
-                        {project.team.join(", ")}
-                      </span>
-                    </div>
-
-                    <p className="text-sm text-gray-500 mb-5 leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Score pill buttons */}
-                    <div className="space-y-3 mb-4">
-                      {CRITERIA.map((criterion) => (
-                        <div key={criterion}>
-                          <label className="block text-xs font-medium text-slate-500 mb-1.5">
-                            {criterion}
-                          </label>
-                          <div className="flex gap-1.5 flex-wrap">
-                            {Array.from({ length: 10 }, (_, i) => i + 1).map(
-                              (n) => {
-                                const selected = scores[idx]?.scores?.[criterion] === n;
-                                return (
-                                  <button
-                                    key={n}
-                                    type="button"
-                                    onClick={() => setScore(idx, criterion, n)}
-                                    className={`w-9 h-9 rounded-lg text-sm font-semibold transition-all ${
-                                      selected
-                                        ? "bg-indigo-500 text-white shadow-sm scale-105"
-                                        : "bg-slate-50 text-slate-500 hover:bg-slate-100"
-                                    }`}
-                                  >
-                                    {n}
-                                  </button>
-                                );
-                              }
-                            )}
+                          {opt.img && <img src={opt.img} alt={opt.label} className="w-full h-40 object-cover object-top" />}
+                          <div className="p-3">
+                            <p className="font-bold text-sm text-slate-900">{opt.label}</p>
+                            <p className="text-xs text-slate-400 mt-0.5">{opt.description}</p>
                           </div>
-                        </div>
+                        </button>
                       ))}
                     </div>
+                  )}
 
-                    <textarea
-                      className="input-field text-sm resize-none"
-                      rows={2}
-                      placeholder="Comments (optional)"
-                      value={scores[idx]?.comment || ""}
-                      onChange={(e) => setComment(idx, e.target.value)}
-                    />
-                  </div>
+                  {/* Pigeon challenge */}
+                  {challenge.id === 2 && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {challenge.options?.map((opt) => (
+                        <button
+                          key={opt.id}
+                          onClick={() => setSingleAnswer(challenge.id, opt.id)}
+                          className={`rounded-xl overflow-hidden border-2 transition-all text-left ${
+                            answers[challenge.id]?.answer === opt.id
+                              ? "border-indigo-500 ring-2 ring-indigo-100"
+                              : "border-slate-100 hover:border-indigo-200"
+                          }`}
+                        >
+                          <img src={opt.img} alt={opt.label} className="w-full h-36 object-cover" />
+                          <div className="p-3">
+                            <p className="font-bold text-sm text-slate-900">{opt.label}</p>
+                            <p className="text-xs text-slate-400 mt-0.5">{opt.description}</p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Handshake rating challenge */}
+                  {challenge.type === "rating" && challenge.img && (
+                    <div>
+                      <img src={challenge.img} alt="handshake" className="w-full h-52 object-cover rounded-xl mb-6" />
+                      <div className="space-y-5">
+                        {challenge.criteria?.map((criterion) => (
+                          <div key={criterion}>
+                            <div className="flex justify-between mb-2">
+                              <label className="text-sm font-semibold text-slate-700">{criterion}</label>
+                              <span className="text-sm font-bold text-indigo-600">
+                                {answers[challenge.id]?.[criterion] ? `${answers[challenge.id][criterion]}/10` : "—"}
+                              </span>
+                            </div>
+                            <div className="flex gap-1.5 flex-wrap">
+                              {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                                <button
+                                  key={n}
+                                  onClick={() => setRating(challenge.id, criterion, n)}
+                                  className={`w-9 h-9 rounded-lg text-xs font-bold transition-all ${
+                                    answers[challenge.id]?.[criterion] === n
+                                      ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
+                                      : "bg-slate-100 text-slate-600 hover:bg-indigo-100 hover:text-indigo-700"
+                                  }`}
+                                >
+                                  {n}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Text-only multiple choice (LinkedIn bios) */}
+                  {challenge.id === 4 && challenge.options && (
+                    <div className="grid grid-cols-2 gap-3">
+                      {challenge.options.map((opt) => (
+                        <button
+                          key={opt.id}
+                          onClick={() => setSingleAnswer(challenge.id, opt.id)}
+                          className={`rounded-xl p-4 border-2 transition-all text-left ${
+                            answers[challenge.id]?.answer === opt.id
+                              ? "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-100"
+                              : "border-slate-100 hover:border-indigo-200 bg-white"
+                          }`}
+                        >
+                          <p className="font-bold text-slate-900">{opt.label}</p>
+                          <p className="text-xs text-slate-400 mt-0.5">{opt.description}</p>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Reveal hint */}
+                  {currentAnswered && challenge.correctHint && !revealed && (
+                    <motion.button
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-6 text-xs text-indigo-500 underline underline-offset-2 cursor-pointer"
+                      onClick={() => setRevealed(true)}
+                    >
+                      Why is this the right answer?
+                    </motion.button>
+                  )}
+
+                  {revealed && challenge.correctHint && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4"
+                    >
+                      <p className="text-sm text-amber-800 font-medium">💡 {challenge.correctHint}</p>
+                    </motion.div>
+                  )}
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              </div>
+
+              {/* Next / Submit button */}
+              <div className="flex justify-between items-center">
+                <p className="text-xs text-slate-400">
+                  {totalAnswered} of {CHALLENGES.length} challenges completed
+                </p>
+                <button
+                  onClick={handleNext}
+                  disabled={!currentAnswered || submitting}
+                  className="btn-primary py-3 px-10 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  {submitting
+                    ? "Processing your stupidity..."
+                    : current < CHALLENGES.length - 1
+                    ? "Next Challenge →"
+                    : "Submit & Claim O1 →"}
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
-
-      {/* Sticky submit bar */}
-      <div className="sticky bottom-0 z-40 bg-white/90 backdrop-blur-sm border-t border-slate-100 py-4 px-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <p className="text-sm text-slate-400">
-            {scoredCount()}/5 projects scored
-          </p>
-          <button
-            onClick={handleSubmit}
-            disabled={!allScored() || submitting}
-            className="btn-primary py-2.5 px-8 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            {submitting
-              ? "Processing Evaluations..."
-              : "Submit All Evaluations →"}
-          </button>
-        </div>
-      </div>
-
       <Footer />
     </>
   );
