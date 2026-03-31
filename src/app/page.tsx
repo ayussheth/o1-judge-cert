@@ -1,6 +1,46 @@
+"use client";
+
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger = {
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const SPEAKERS = [
+  {
+    name: "Priya Nair",
+    role: "Head of Recognition",
+    org: "Danveer Technologies",
+    avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=PriyaNair&backgroundColor=b6e3f4",
+  },
+  {
+    name: "David Stern",
+    role: "Judging Committee",
+    org: "Judgeathon 2026",
+    avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=DavidStern&backgroundColor=d1d4f9",
+  },
+  {
+    name: "Keiko Murakami",
+    role: "Ability Assessor",
+    org: "Danveer Technologies",
+    avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=KeikoMurakami&backgroundColor=ffd5dc",
+  },
+  {
+    name: "Arjun Mehta",
+    role: "Program Director",
+    org: "Danveer Technologies",
+    avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=ArjunMehta&backgroundColor=c0aede",
+  },
+];
 
 export default function Home() {
   return (
@@ -8,190 +48,272 @@ export default function Home() {
       <Header />
       <main>
 
-        {/* HERO */}
-        <section className="py-28 px-6 text-center border-b border-gray-100">
-          <div className="max-w-4xl mx-auto">
-            <span className="inline-block text-xs font-bold tracking-widest uppercase text-[var(--color-primary)] bg-blue-50 px-4 py-1.5 rounded-full mb-6">
-              #OnlyJudges · April 1–2, 2026
-            </span>
-            <h1 className="text-5xl md:text-7xl font-black text-[var(--color-navy)] leading-none tracking-tight mb-6">
+        {/* ── HERO ── */}
+        <section className="relative overflow-hidden grid-bg pt-28 pb-32 px-6">
+          {/* Background blobs */}
+          <div className="pointer-events-none absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-indigo-100 opacity-40 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 right-0 w-[500px] h-[500px] rounded-full bg-purple-100 opacity-30 blur-3xl" />
+
+          <motion.div
+            className="max-w-4xl mx-auto text-center relative z-10"
+            initial="hidden"
+            animate="show"
+            variants={stagger}
+          >
+            <motion.div variants={fadeUp}>
+              <span className="hero-badge mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] animate-pulse" />
+                #OnlyJudges · April 1–2, 2026
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUp}
+              className="text-6xl md:text-8xl font-black leading-none tracking-tight mt-6 mb-6"
+            >
               The World&apos;s First<br />
-              <span className="text-[var(--color-primary)]">Judgeathon.</span>
-            </h1>
-            <p className="text-xl text-gray-500 mb-4 max-w-2xl mx-auto leading-relaxed">
+              <span className="gradient-text">Judgeathon.</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="text-xl text-slate-500 max-w-2xl mx-auto mb-4 leading-relaxed"
+            >
               No hackers. No teams. No code.<br />
-              Just you, a panel of projects, and an O1 visa waiting at the finish line.
-            </p>
-            <p className="text-sm text-gray-400 mb-10">
-              Organised by <strong className="text-[var(--color-navy)]">Danveer Technologies</strong> · Powered by extraordinary ability
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              Just you, a panel of projects, and an O1 letter at the finish line.
+            </motion.p>
+
+            <motion.p variants={fadeUp} className="text-sm text-slate-400 mb-10">
+              Organised by <strong className="text-slate-700">Danveer Technologies</strong> · Extraordinary Stupidity Recognised Since 2017
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/register" className="btn-primary text-base py-4 px-10">
                 Register as Judge →
               </Link>
-              <a href="#how-it-works" className="text-base py-4 px-10 border border-gray-200 rounded-lg text-gray-600 hover:border-[var(--color-primary)] transition-colors">
+              <a href="#how-it-works" className="btn-outline text-base">
                 How It Works
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
-        {/* STATS */}
-        <section className="py-14 px-6 border-b border-gray-100">
-          <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {/* ── STATS ── */}
+        <section className="py-16 px-6 border-y border-slate-100 bg-slate-50">
+          <motion.div
+            className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+          >
             {[
               { val: "2,586", label: "Applications since 2017" },
               { val: "69%", label: "Acceptance Rate" },
-              { val: "6-7 days", label: "Processing Time" },
+              { val: "6–7 days", label: "Processing Time" },
               { val: "$185K", label: "Starting Salary, SF" },
             ].map((s) => (
-              <div key={s.label}>
-                <p className="text-3xl font-black text-[var(--color-primary)]">{s.val}</p>
-                <p className="text-sm text-gray-400 mt-1">{s.label}</p>
-              </div>
+              <motion.div key={s.label} variants={fadeUp}>
+                <p className="text-4xl font-black gradient-text">{s.val}</p>
+                <p className="text-sm text-slate-400 mt-1">{s.label}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
 
-        {/* HOW IT WORKS */}
-        <section id="how-it-works" className="py-20 px-6 border-b border-gray-100">
+        {/* ── HOW IT WORKS ── */}
+        <section id="how-it-works" className="py-24 px-6 border-b border-slate-100">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[var(--color-primary)] mb-3">The Format</p>
-              <h2 className="text-3xl md:text-4xl font-black text-[var(--color-navy)]">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              <motion.p variants={fadeUp} className="hero-badge mb-4">The Format</motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black mt-4">
                 A hackathon with one twist:
-              </h2>
-              <p className="text-xl text-gray-500 mt-3">You don&apos;t build. You judge.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-xl text-slate-500 mt-3">
+                You don&apos;t build. You judge.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
               {[
                 {
                   step: "01",
+                  emoji: "📋",
                   title: "Register",
                   desc: "Submit your credentials. Our team verifies your background against Danveer extraordinary ability criteria within 48 hours.",
                 },
                 {
                   step: "02",
+                  emoji: "⚡",
                   title: "Hack as a Judge",
                   desc: "Evaluate 5 projects across 4 criteria. Score fast, comment sharp. This is your hack — every point you give is a point you earn.",
                 },
                 {
                   step: "03",
+                  emoji: "🏆",
                   title: "Collect Your Visa",
-                  desc: "Complete your evaluations and receive your Danveer approval notice, flight voucher, and certificate of extraordinary ability.",
+                  desc: "Complete your evaluations and receive your Danveer approval notice, ICE Airways boarding pass, and certificate.",
                 },
               ].map((s) => (
-                <div key={s.step} className="card-minimal relative">
-                  <span className="text-6xl font-black text-gray-50 absolute top-4 right-4 leading-none select-none">{s.step}</span>
-                  <h3 className="font-bold text-lg text-[var(--color-navy)] mb-2 relative">{s.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed relative">{s.desc}</p>
-                </div>
+                <motion.div key={s.step} variants={fadeUp} className="card-minimal group relative overflow-hidden">
+                  <span className="absolute top-4 right-4 text-5xl font-black text-slate-50 group-hover:text-indigo-50 transition-colors select-none">{s.step}</span>
+                  <div className="text-3xl mb-4">{s.emoji}</div>
+                  <h3 className="font-bold text-lg text-[var(--color-navy)] mb-2">{s.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* PRIZES */}
-        <section id="prizes" className="py-20 px-6 border-b border-gray-100 bg-gray-50">
+        {/* ── PRIZES ── */}
+        <section id="prizes" className="py-24 px-6 border-b border-slate-100 bg-slate-50">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[var(--color-primary)] mb-3">Prizes</p>
-              <h2 className="text-3xl md:text-4xl font-black text-[var(--color-navy)]">
-                The most ambitious prize pool<br />in hackathon history.
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="card-minimal border-2 border-yellow-300 bg-yellow-50">
-                <p className="text-3xl mb-3">🥇</p>
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              <motion.p variants={fadeUp} className="hero-badge mb-4">Prizes</motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black mt-4">
+                The most ambitious<br />prize pool in history.
+              </motion.h2>
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              <motion.div variants={fadeUp} className="card border-2 border-yellow-200 bg-gradient-to-b from-yellow-50 to-white">
+                <p className="text-4xl mb-4">🥇</p>
                 <p className="text-xs font-bold tracking-widest uppercase text-yellow-600 mb-1">1st Place</p>
-                <h3 className="text-xl font-black text-[var(--color-navy)] mb-2">O1 Visa Sponsorship</h3>
-                <p className="text-sm text-gray-500 mb-2">Extraordinary ability letter + $185K offer letter, SF.</p>
-                <p className="text-xs font-semibold text-yellow-700">✈️ + ICE Airways™ one-way flight to SFO included</p>
-              </div>
-              <div className="card-minimal border-2 border-gray-200 bg-white">
-                <p className="text-3xl mb-3">🥈</p>
-                <p className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-1">2nd Place</p>
+                <h3 className="text-xl font-black text-[var(--color-navy)] mb-2">O1 Sponsorship</h3>
+                <p className="text-sm text-slate-500 mb-3">Extraordinary ability letter + $185K offer letter, SF.</p>
+                <p className="text-xs font-semibold text-yellow-700 bg-yellow-100 rounded-lg px-3 py-2">✈️ ICE Airways™ one-way SFO included</p>
+              </motion.div>
+              <motion.div variants={fadeUp} className="card border-2 border-slate-200">
+                <p className="text-4xl mb-4">🥈</p>
+                <p className="text-xs font-bold tracking-widest uppercase text-slate-500 mb-1">2nd Place</p>
                 <h3 className="text-xl font-black text-[var(--color-navy)] mb-2">H-1B Petition</h3>
-                <p className="text-sm text-gray-500">Specialty occupation sponsorship + 3 year initial period + employer-of-record setup.</p>
-              </div>
-              <div className="card-minimal border-2 border-orange-200 bg-orange-50">
-                <p className="text-3xl mb-3">🥉</p>
+                <p className="text-sm text-slate-500">Specialty occupation sponsorship + 3 year initial period + employer-of-record setup.</p>
+              </motion.div>
+              <motion.div variants={fadeUp} className="card border-2 border-orange-200 bg-gradient-to-b from-orange-50 to-white">
+                <p className="text-4xl mb-4">🥉</p>
                 <p className="text-xs font-bold tracking-widest uppercase text-orange-600 mb-1">3rd Place</p>
                 <h3 className="text-xl font-black text-[var(--color-navy)] mb-2">Asylum</h3>
-                <p className="text-sm text-gray-500">Immediate protection + work authorisation + pathway to green card. Valid while supplies last.</p>
-              </div>
-            </div>
-            <p className="text-center text-xs text-gray-300 mt-8">* All prizes delivered digitally. Expires April 2, 2026. Not legal immigration documents.</p>
+                <p className="text-sm text-slate-500">Immediate protection + work authorisation + pathway to green card. Valid while supplies last.</p>
+              </motion.div>
+            </motion.div>
+            <p className="text-center text-xs text-slate-300 mt-8">* All prizes fictional. Expires April 2, 2026. For entertainment only.</p>
           </div>
         </section>
 
-        {/* JUDGES / SPEAKERS */}
-        <section id="judges" className="py-20 px-6 border-b border-gray-100">
+        {/* ── SPEAKERS ── */}
+        <section id="judges" className="py-24 px-6 border-b border-slate-100">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[var(--color-primary)] mb-3">Who&apos;s Judging the Judges</p>
-              <h2 className="text-3xl md:text-4xl font-black text-[var(--color-navy)]">
-                Our distinguished panel.
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { name: "Priya Nair", role: "Head of Recognition", init: "PN" },
-                { name: "David Stern", role: "Judging Committee", init: "DS" },
-                { name: "Keiko Murakami", role: "Ability Assessor", init: "KM" },
-                { name: "Arjun Mehta", role: "Danveer Technologies", init: "AM" },
-              ].map((j) => (
-                <div key={j.name} className="text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-[var(--color-navy)] text-white flex items-center justify-center font-bold text-lg mx-auto mb-3">
-                    {j.init}
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              <motion.p variants={fadeUp} className="hero-badge mb-4">Panel</motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black mt-4">
+                Who&apos;s judging the judges.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-slate-400 mt-3 text-lg">
+                Distinguished experts in the field of extraordinary stupidity.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-2 md:grid-cols-4 gap-6"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              {SPEAKERS.map((s) => (
+                <motion.div
+                  key={s.name}
+                  variants={fadeUp}
+                  className="card text-center group cursor-default"
+                >
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden mx-auto mb-4 bg-slate-100 ring-2 ring-slate-100 group-hover:ring-indigo-200 transition-all">
+                    <Image
+                      src={s.avatar}
+                      alt={s.name}
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                      unoptimized
+                    />
                   </div>
-                  <p className="font-semibold text-sm text-[var(--color-navy)]">{j.name}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{j.role}</p>
-                </div>
+                  <p className="font-bold text-sm text-[var(--color-navy)]">{s.name}</p>
+                  <p className="text-xs text-[var(--color-primary)] font-medium mt-0.5">{s.role}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">{s.org}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* SCHEDULE */}
-        <section id="schedule" className="py-20 px-6 border-b border-gray-100 bg-gray-50">
+        {/* ── SCHEDULE ── */}
+        <section id="schedule" className="py-24 px-6 border-b border-slate-100 bg-slate-50">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[var(--color-primary)] mb-3">Schedule</p>
-              <h2 className="text-3xl font-black text-[var(--color-navy)]">48 hours. One mission.</h2>
-            </div>
-            <div className="space-y-4">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              <motion.p variants={fadeUp} className="hero-badge mb-4">Schedule</motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-black mt-4">48 hours. One mission.</motion.h2>
+            </motion.div>
+
+            <motion.div
+              className="space-y-3"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
               {[
-                { time: "Apr 1 · 12:00 AM", event: "Judgeathon Opens", note: "Registration live" },
-                { time: "Apr 1 · 9:00 AM", event: "Project Panel Released", note: "5 projects unlocked for scoring" },
-                { time: "Apr 1 · 6:00 PM", event: "Midpoint Check", note: "Leaderboard published" },
-                { time: "Apr 2 · 11:59 PM", event: "Judgeathon Closes", note: "All submissions final" },
-                { time: "Apr 3 · 12:00 AM", event: "Winners Announced", note: "Approval letters dispatched" },
-              ].map((s) => (
-                <div key={s.time} className="flex gap-4 items-start card-minimal">
-                  <div className="text-xs font-mono text-[var(--color-primary)] w-36 shrink-0 pt-0.5">{s.time}</div>
+                { time: "Apr 1 · 12:00 AM", event: "Judgeathon Opens", note: "Registration goes live", icon: "🚀" },
+                { time: "Apr 1 · 9:00 AM",  event: "Project Panel Released", note: "5 projects unlocked for scoring", icon: "📂" },
+                { time: "Apr 1 · 6:00 PM",  event: "Midpoint Check", note: "Leaderboard published", icon: "📊" },
+                { time: "Apr 2 · 11:59 PM", event: "Judgeathon Closes", note: "All submissions final", icon: "🔒" },
+                { time: "Apr 3 · 12:00 AM", event: "Winners Announced", note: "Approval letters dispatched", icon: "🏆" },
+              ].map((s, i) => (
+                <motion.div key={s.time} variants={fadeUp} className="flex gap-4 items-center card py-4 px-5">
+                  <span className="text-xl">{s.icon}</span>
+                  <div className="text-xs font-mono text-[var(--color-primary)] w-32 shrink-0">{s.time}</div>
                   <div>
                     <p className="font-semibold text-sm text-[var(--color-navy)]">{s.event}</p>
-                    <p className="text-xs text-gray-400">{s.note}</p>
+                    <p className="text-xs text-slate-400">{s.note}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" className="py-20 px-6 border-b border-gray-100">
+        {/* ── FAQ ── */}
+        <section id="faq" className="py-24 px-6 border-b border-slate-100">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-xs font-bold tracking-widest uppercase text-[var(--color-primary)] mb-3">FAQ</p>
-              <h2 className="text-3xl font-black text-[var(--color-navy)]">You have questions.<br />We have answers.</h2>
-            </div>
-            <div className="space-y-6">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
+              <motion.p variants={fadeUp} className="hero-badge mb-4">FAQ</motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-black mt-4">
+                You have questions.<br />We have answers.
+              </motion.h2>
+            </motion.div>
+
+            <motion.div
+              className="space-y-0"
+              initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+            >
               {[
                 {
                   q: "What exactly is a Judgeathon?",
-                  a: "A hackathon where there are no hackers — only judges. You compete by evaluating projects. Your scores, speed, and commentary are what determine your rank.",
+                  a: "A hackathon where there are no hackers — only judges. You compete by evaluating projects. Your scores, speed, and commentary determine your rank.",
                 },
                 {
                   q: "Do I need to code anything?",
@@ -209,29 +331,36 @@ export default function Home() {
                   q: "Can I share my results?",
                   a: "You are strongly encouraged to tweet your approval letter. The more people who see it, the more extraordinary you become.",
                 },
-              ].map((f) => (
-                <div key={f.q} className="border-b border-gray-100 pb-6">
+              ].map((f, i) => (
+                <motion.div key={f.q} variants={fadeUp} className="border-b border-slate-100 py-6">
                   <p className="font-bold text-[var(--color-navy)] mb-2">{f.q}</p>
-                  <p className="text-sm text-gray-500 leading-relaxed">{f.a}</p>
-                </div>
+                  <p className="text-sm text-slate-500 leading-relaxed">{f.a}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-24 px-6 text-center">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-black text-[var(--color-navy)] mb-4">
+        {/* ── CTA ── */}
+        <section className="py-28 px-6 relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50" />
+          <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-indigo-100 opacity-50 blur-3xl" />
+          <motion.div
+            className="max-w-2xl mx-auto text-center relative z-10"
+            initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
+          >
+            <motion.h2 variants={fadeUp} className="text-5xl md:text-6xl font-black mb-4">
               Ready to judge?
-            </h2>
-            <p className="text-gray-500 mb-10 text-lg">
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-slate-500 mb-10 text-lg">
               Applications close April 2. Visa expires same day.
-            </p>
-            <Link href="/register" className="btn-primary text-base py-4 px-12">
-              Register as Judge →
-            </Link>
-          </div>
+            </motion.p>
+            <motion.div variants={fadeUp}>
+              <Link href="/register" className="btn-primary text-base py-4 px-14">
+                Register as Judge →
+              </Link>
+            </motion.div>
+          </motion.div>
         </section>
 
       </main>
