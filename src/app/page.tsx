@@ -11,15 +11,13 @@ export default function Home() {
         <section className="py-24 px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-medium tracking-widest uppercase text-[var(--color-primary)] mb-4">
-              Devfolio &middot; Immigration Partnership Program
+              Danveer Technologies &middot; Visa Partnership Program
             </p>
             <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-navy)] leading-tight mb-6">
               O1 Visa Judge Sponsorship Program
             </h1>
             <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Develop extraordinary ability through institutional contribution.
-              Evaluate cutting-edge projects at world-class hackathons and earn
-              O1 visa sponsorship through demonstrated expertise.
+              Evaluate cutting-edge projects and earn O1 visa sponsorship through demonstrated expertise in technology assessment.
             </p>
             <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
               <Link
@@ -137,9 +135,9 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="card-minimal">
                 <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                  &ldquo;I was skeptical at first, but the Devfolio team walked
+                  &ldquo;I was skeptical at first, but the Danveer team walked
                   me through every step. I received my O1 approval in just 12
-                  days after judging at ETHGlobal.&rdquo;
+                  days after judging.&rdquo;
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-[var(--color-navy)] rounded-full flex items-center justify-center text-white text-xs font-semibold">
@@ -205,8 +203,7 @@ export default function Home() {
             Ready to Begin?
           </h2>
           <p className="text-gray-500 mb-8 max-w-md mx-auto">
-            Applications are reviewed on a rolling basis. Spots for Q2 2026 are
-            limited.
+            Applications are reviewed on a rolling basis. Expiry: April 2, 2026.
           </p>
           <Link href="/register" className="btn-primary text-base py-3 px-8">
             Apply as Judge

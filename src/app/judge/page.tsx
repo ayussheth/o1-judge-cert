@@ -15,17 +15,9 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    name: "DeFi Insurance Protocol",
-    team: ["Maya Chen", "Raj Krishnan", "Leo Müller"],
-    hackathon: "ETHGlobal New York 2025",
-    description:
-      "A decentralized insurance protocol that uses on-chain risk modeling to provide parametric coverage for smart contract failures. Features automated claims processing via oracle-verified events and a novel bonding curve for premium pricing.",
-    tags: ["Solidity", "Chainlink", "React"],
-  },
-  {
     name: "AI Content Moderation Engine",
     team: ["Sarah Park", "Omar Elgamal"],
-    hackathon: "AngelHack Global 2025",
+    hackathon: "Devfolio HackStorm 2025",
     description:
       "Multi-modal content moderation system combining vision transformers with LLM-based context analysis. Achieves 97.3% accuracy on hate speech detection while reducing false positives by 40% compared to existing solutions.",
     tags: ["Python", "PyTorch", "FastAPI"],
@@ -33,15 +25,15 @@ const PROJECTS: Project[] = [
   {
     name: "Web3 Social Graph",
     team: ["Priya Sharma", "Alex Volkov", "Kim Tanaka", "Jordan Reeves"],
-    hackathon: "Devfolio ETHIndia 2025",
+    hackathon: "Devfolio BuildAssembly 2025",
     description:
-      "An open social graph protocol that maps on-chain identity relationships across EVM chains. Includes a recommendation engine for DAO governance participation based on expertise signals and contribution history.",
+      "An open social graph protocol that maps on-chain identity relationships across EVM chains. Includes a recommendation engine for community governance participation based on expertise signals and contribution history.",
     tags: ["TypeScript", "GraphQL", "Polygon"],
   },
   {
     name: "Neural Code Review Assistant",
     team: ["David Liu", "Amara Osei"],
-    hackathon: "HackMIT 2025",
+    hackathon: "Devfolio CodeSprint 2025",
     description:
       "IDE plugin that performs real-time code review using fine-tuned models trained on 2M+ merged pull requests. Provides security vulnerability detection, performance suggestions, and architectural feedback inline.",
     tags: ["Rust", "WASM", "GPT-4"],
@@ -49,10 +41,18 @@ const PROJECTS: Project[] = [
   {
     name: "ClimateFi Carbon Credits",
     team: ["Elena Rossi", "Tariq Hassan", "Jun Wei"],
-    hackathon: "Devfolio BUIDLathon 2025",
+    hackathon: "Devfolio EcoHack 2025",
     description:
       "Tokenized carbon credit marketplace with satellite-verified reforestation tracking. Uses IoT sensor networks for real-time carbon sequestration measurement and automated credit issuance via smart contracts.",
     tags: ["Solidity", "IoT", "Next.js"],
+  },
+  {
+    name: "DeFi Insurance Protocol",
+    team: ["Maya Chen", "Raj Krishnan", "Leo Müller"],
+    hackathon: "Devfolio FinanceHack 2025",
+    description:
+      "A decentralized insurance protocol that uses on-chain risk modeling to provide parametric coverage for smart contract failures. Features automated claims processing via oracle-verified events and a novel bonding curve for premium pricing.",
+    tags: ["Solidity", "Chainlink", "React"],
   },
 ];
 

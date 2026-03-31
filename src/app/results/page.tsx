@@ -28,7 +28,7 @@ export default function ResultsPage() {
 
   function shareTwitter() {
     const text = encodeURIComponent(
-      `Honored to be approved for the O1 Visa Judge Sponsorship Program through @devabordin. Extraordinary ability recognized. #O1Visa #Devfolio`
+      `Just got approved for the O1 Visa by @danveertec 🚀 Danveer Technologies recognized my extraordinary ability in tech. Expires April 2. Check it out: https://o1-judge-cert.vercel.app #O1Visa #DanveerTech #FakeButFunny`
     );
     window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
   }
@@ -79,8 +79,8 @@ export default function ResultsPage() {
         20,
         y + 24
       );
-      doc.text("Priority Date: April 1, 2026", 20, y + 32);
-      doc.text("Petitioner: Devfolio Technologies, Inc.", 20, y + 40);
+      doc.text("Expiry Date: April 2, 2026", 20, y + 32);
+      doc.text("Petitioner: Danveer Technologies, Inc.", 20, y + 40);
 
       doc.setFontSize(10);
       const textY = y + 56;
@@ -100,7 +100,7 @@ USCIS Texas Service Center`;
 
       doc.setFontSize(6);
       doc.text(
-        "Valid for April 1st travel only. ICE Airways™ One-Way Ticket to San Francisco included.",
+        "Valid for April 2nd, 2026 travel only. ICE Airways™ One-Way Ticket to San Francisco included.",
         105,
         285,
         { align: "center" }
@@ -128,21 +128,72 @@ USCIS Texas Service Center`;
       doc.text(`Passenger: ${judgeName.toUpperCase()}`, 20, by);
       doc.text("From: Your Current Location", 20, by + 10);
       doc.text("To: San Francisco International (SFO)", 20, by + 20);
-      doc.text("Date: April 1, 2026", 20, by + 30);
-      doc.text("Flight: ICE-0401", 20, by + 40);
+      doc.text("Date: April 2, 2026", 20, by + 30);
+      doc.text("Flight: ICE-0402", 20, by + 40);
       doc.text("Class: Extraordinary", 20, by + 50);
       doc.text("Seat: O1-A", 20, by + 60);
       doc.text(`Confirmation: ${caseNumber}`, 20, by + 70);
 
       doc.setFontSize(6);
       doc.text(
-        "This voucher is non-transferable and valid exclusively on April 1st. No actual flight is included.",
+        "This voucher is non-transferable and valid exclusively on April 2nd, 2026. No actual flight is included.",
         105,
         285,
         { align: "center" }
       );
 
       doc.save("ICE_Airways_Flight_Voucher.pdf");
+    } else if (type === "certificate") {
+      doc.setFont("times", "bold");
+      doc.setFontSize(20);
+      doc.text("CERTIFICATE OF EXTRAORDINARY ABILITY", 105, 40, {
+        align: "center",
+      });
+
+      doc.setFont("times", "italic");
+      doc.setFontSize(12);
+      doc.text("Danveer O1 Visa Judge Sponsorship Program", 105, 52, {
+        align: "center",
+      });
+
+      doc.line(40, 58, 170, 58);
+
+      doc.setFont("times", "normal");
+      doc.setFontSize(11);
+      doc.text("This certifies that", 105, 75, { align: "center" });
+
+      doc.setFont("times", "bold");
+      doc.setFontSize(18);
+      doc.text(judgeName, 105, 90, { align: "center" });
+
+      doc.setFont("times", "normal");
+      doc.setFontSize(11);
+      const certBody = `has demonstrated extraordinary ability in the evaluation of technology projects through participation in the Danveer Judging Program. Their expert assessments have contributed to the advancement of innovation in the global technology ecosystem.
+
+Visa Category: Extraordinary Ability (Self-Assessed)
+Date of Recognition: ${formattedDate}
+Case Reference: ${caseNumber}`;
+
+      const certLines = doc.splitTextToSize(certBody, 130);
+      doc.text(certLines, 105, 105, { align: "center" });
+
+      doc.setFont("times", "italic");
+      doc.setFontSize(10);
+      doc.text("_______________________", 60, 180);
+      doc.text("Program Director", 60, 188);
+      doc.text("Danveer Technologies", 60, 195);
+
+      doc.text("_______________________", 140, 180);
+      doc.text("Immigration Liaison", 140, 188);
+      doc.text("USCIS Partnership Office", 140, 195);
+
+      doc.setFontSize(6);
+      doc.text(
+        "This certificate is ceremonial and does not constitute legal immigration documentation. Valid April 2nd, 2026 only.",
+        105,
+        285,
+        { align: "center" }
+      );
     } else {
       doc.setFont("times", "bold");
       doc.setFontSize(20);
@@ -152,7 +203,7 @@ USCIS Texas Service Center`;
 
       doc.setFont("times", "italic");
       doc.setFontSize(12);
-      doc.text("Devfolio O1 Visa Judge Sponsorship Program", 105, 52, {
+      doc.text("Danveer O1 Visa Judge Sponsorship Program", 105, 52, {
         align: "center",
       });
 
@@ -277,15 +328,15 @@ Case Reference: ${caseNumber}`;
               <div>
                 <p className="text-xs text-gray-400 uppercase">Petitioner</p>
                 <p className="font-medium text-[var(--color-navy)]">
-                  Devfolio Technologies, Inc.
+                  Danveer Technologies, Inc.
                 </p>
               </div>
               <div>
                 <p className="text-xs text-gray-400 uppercase">
-                  Priority Date
+                  Expiry Date
                 </p>
                 <p className="font-medium text-[var(--color-navy)]">
-                  April 1, 2026
+                  April 2, 2026
                 </p>
               </div>
             </div>
@@ -295,12 +346,12 @@ Case Reference: ${caseNumber}`;
               <p>Dear {judgeName},</p>
               <p>
                 This notice confirms the approval of the above-referenced
-                petition filed on your behalf by Devfolio Technologies, Inc. for
+                petition filed on your behalf by Danveer Technologies, Inc. for
                 classification as an alien of extraordinary ability in the field
                 of technology evaluation and institutional assessment.
               </p>
               <p>
-                Your contributions as a judge in the Devfolio Hackathon
+                Your contributions as a judge in the Danveer Project
                 Evaluation Program have been reviewed and determined to meet the
                 evidentiary criteria for extraordinary ability under 8 CFR
                 204.5(h)(3), specifically:
@@ -351,12 +402,12 @@ Case Reference: ${caseNumber}`;
                 Visa Category: Extraordinary Ability (Self-Assessed). This
                 approval includes one (1) complimentary ICE Airways&trade;
                 one-way ticket to San Francisco, CA. Travel class: Extraordinary.
-                Seat assignment: O1-A. Valid for April 1st travel only. This
+                Seat assignment: O1-A. Valid for April 2nd, 2026 only. This
                 notice does not constitute a legally binding immigration
-                document and is issued in partnership with the Devfolio April
+                document and is issued in partnership with the Danveer April
                 Program Initiative. Beneficiary assumes all responsibility for
                 sharing on social media. Case processing powered by
-                devfolio.co. Not affiliated with any actual government agency.
+                danveer.co. Not affiliated with any actual government agency.
               </p>
             </div>
           </div>
@@ -383,21 +434,24 @@ Case Reference: ${caseNumber}`;
             </button>
           </div>
 
-          {/* Share */}
-          <div className="text-center">
-            <p className="text-sm text-gray-500 mb-4">
-              Share your achievement
+          {/* Share - Tweet Highlighted */}
+          <div className="text-center bg-blue-50 rounded-lg p-8 border border-blue-200">
+            <p className="text-sm text-[var(--color-navy)] font-semibold mb-4">
+              🚀 Share Your Approval Letter on Twitter
             </p>
-            <div className="flex justify-center gap-4">
+            <p className="text-xs text-gray-600 mb-6">
+              Screenshot the letter above and share it with your followers. Link to the prank automatically included.
+            </p>
+            <div className="flex flex-col gap-3 items-center">
               <button
                 onClick={shareTwitter}
-                className="card px-6 py-3 text-sm font-medium text-[var(--color-navy)] hover:border-[var(--color-primary)] cursor-pointer"
+                className="btn-primary px-8 py-3 w-full sm:w-auto"
               >
-                Share on Twitter
+                Tweet Your Approval Letter
               </button>
               <button
                 onClick={shareLinkedIn}
-                className="card px-6 py-3 text-sm font-medium text-[var(--color-navy)] hover:border-[var(--color-primary)] cursor-pointer"
+                className="card px-6 py-3 text-sm font-medium text-[var(--color-navy)] hover:border-[var(--color-primary)] cursor-pointer w-full sm:w-auto"
               >
                 Share on LinkedIn
               </button>
