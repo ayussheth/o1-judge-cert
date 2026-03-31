@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState } from "react";
 import IconRegister from "@/components/icons/IconRegister";
 import IconJudge from "@/components/icons/IconJudge";
 import IconCertificate from "@/components/icons/IconCertificate";
@@ -17,6 +18,51 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 const stagger = { show: { transition: { staggerChildren: 0.1 } } };
+
+function FAQSection() {
+  const [open, setOpen] = useState<number | null>(null);
+  const faqs = [
+    { q: "What exactly is a Judgeathon?", a: "A hackathon where there are no hackers — only judges. You compete by completing absurd challenges. Your score, speed, and commentary determine your rank." },
+    { q: "Do I need to code anything?", a: "Absolutely not. You just need strong opinions and the ability to rate clouds by intelligence. Extraordinary ability not required — but it helps." },
+    { q: "Is the O1 visa real?", a: "The letter is incredibly real-looking. The visa is not. This expires April 2, 2026 for a reason." },
+    { q: "Who is Danveer Technologies?", a: "A distinguished technology firm with deep expertise in extraordinary ability assessment, institutional recognition, and April programming." },
+    { q: "Can I share my results?", a: "You are strongly encouraged to tweet your approval letter. The more people who see it, the more extraordinary you become." },
+  ];
+
+  return (
+    <section id="faq" className="py-20 px-6 bg-white border-b border-gray-200">
+      <div className="max-w-3xl mx-auto">
+        <motion.div className="mb-14 text-center" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
+          <motion.p variants={fadeUp} className="font-mono-accent text-xs tracking-[0.2em] uppercase text-[#B22234] mb-3">FAQ</motion.p>
+          <motion.h2 variants={fadeUp} className="font-serif text-4xl font-black text-[#002868]">Frequently Asked Questions.</motion.h2>
+        </motion.div>
+        <motion.div className="space-y-0 border border-gray-200" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
+          {faqs.map((f, i) => (
+            <motion.div key={i} variants={fadeUp} className={`border-b border-gray-100 ${i === faqs.length - 1 ? 'border-b-0' : ''}`}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full px-6 py-6 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
+              >
+                <p className="font-serif font-bold text-[#002868]">{f.q}</p>
+                <span className={`text-[#B22234] font-bold text-lg transition-transform ${open === i ? 'rotate-180' : ''}`}>
+                  +
+                </span>
+              </button>
+              <motion.div
+                initial={{ height: 0, overflow: "hidden" }}
+                animate={{ height: open === i ? "auto" : 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <p className="px-6 pb-6 text-sm text-gray-500 leading-relaxed">{f.a}</p>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
 const SPEAKERS = [
   { name: "Priya Nair", role: "Head of Recognition", org: "Danveer Technologies", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=PriyaNair&backgroundColor=b6e3f4" },
@@ -223,29 +269,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" className="py-20 px-6 bg-white border-b border-gray-200">
-          <div className="max-w-3xl mx-auto">
-            <motion.div className="mb-14 text-center" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-              <motion.p variants={fadeUp} className="font-mono-accent text-xs tracking-[0.2em] uppercase text-[#B22234] mb-3">FAQ</motion.p>
-              <motion.h2 variants={fadeUp} className="font-serif text-4xl font-black text-[#002868]">Frequently Asked Questions.</motion.h2>
-            </motion.div>
-            <motion.div className="space-y-0 border border-gray-200" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-              {[
-                { q: "What exactly is a Judgeathon?", a: "A hackathon where there are no hackers — only judges. You compete by completing absurd challenges. Your score, speed, and commentary determine your rank." },
-                { q: "Do I need to code anything?", a: "Absolutely not. You just need strong opinions and the ability to rate clouds by intelligence. Extraordinary ability not required — but it helps." },
-                { q: "Is the O1 visa real?", a: "The letter is incredibly real-looking. The visa is not. This expires April 2, 2026 for a reason." },
-                { q: "Who is Danveer Technologies?", a: "A distinguished technology firm with deep expertise in extraordinary ability assessment, institutional recognition, and April programming." },
-                { q: "Can I share my results?", a: "You are strongly encouraged to tweet your approval letter. The more people who see it, the more extraordinary you become." },
-              ].map((f, i) => (
-                <motion.div key={f.q} variants={fadeUp} className={`px-6 py-6 bg-white ${i !== 4 ? 'border-b border-gray-100' : ''}`}>
-                  <p className="font-serif font-bold text-[#002868] mb-2">{f.q}</p>
-                  <p className="text-sm text-gray-500 leading-relaxed">{f.a}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
+        {/* FAQ — Accordion */}
+        <FAQSection />
 
         {/* CTA */}
         <section className="py-24 px-6 bg-[#002868] text-white text-center">

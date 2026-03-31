@@ -164,7 +164,7 @@ export default function RegisterPage() {
 
           <motion.form
             onSubmit={handleSubmit}
-            className="space-y-5"
+            className="space-y-6"
             initial="hidden"
             animate="show"
             variants={stagger}
@@ -176,9 +176,9 @@ export default function RegisterPage() {
                 type="text"
                 required
                 placeholder=" "
-                className="input-field peer pt-5 pb-2"
+                className="input-field peer w-full pt-6 pb-3 text-sm"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-2 text-xs font-semibold text-[#B22234] peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 Full Name *
               </label>
             </motion.div>
@@ -189,9 +189,9 @@ export default function RegisterPage() {
                 type="email"
                 required
                 placeholder=" "
-                className="input-field peer pt-5 pb-2"
+                className="input-field peer w-full pt-6 pb-3 text-sm"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-2 text-xs font-semibold text-[#B22234] peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 Email Address *
               </label>
             </motion.div>
@@ -201,9 +201,9 @@ export default function RegisterPage() {
                 name="linkedin"
                 type="url"
                 placeholder=" "
-                className="input-field peer pt-5 pb-2"
+                className="input-field peer w-full pt-6 pb-3 text-sm"
               />
-              <label className="absolute left-4 top-1 text-[10px] font-medium text-[#B22234] peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:font-normal transition-all pointer-events-none">
+              <label className="absolute left-4 top-2 text-xs font-semibold text-[#B22234] peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:font-normal transition-all pointer-events-none">
                 LinkedIn Profile
               </label>
             </motion.div>
