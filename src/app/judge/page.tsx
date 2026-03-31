@@ -6,7 +6,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 
-const CHALLENGES = [
+type ChallengeOption = { id: string; label: string; description?: string; img?: string; bios?: string[] };
+type Challenge = {
+  id: number; type: string; emoji: string; instruction: string; question: string; subtext: string;
+  options?: ChallengeOption[]; bios?: string[]; criteria?: string[]; img?: string;
+  answerType: string; correctHint?: string;
+};
+
+const CHALLENGES: Challenge[] = [
   {
     id: 1,
     type: "rank",
@@ -227,7 +234,7 @@ export default function JudgePage() {
                                 : "border-slate-100 hover:border-indigo-200"
                             }`}
                           >
-                            <img src={opt.img} alt={opt.label} className="w-full h-36 object-cover" />
+                            {opt.img && <img src={opt.img} alt={opt.label} className="w-full h-36 object-cover" />}
                             <div className="p-3">
                               <p className="font-bold text-sm text-slate-900">{opt.label}</p>
                               <p className="text-xs text-slate-400 mt-0.5">{opt.description}</p>
@@ -285,7 +292,7 @@ export default function JudgePage() {
                               : "border-slate-100 hover:border-indigo-200"
                           }`}
                         >
-                          <img src={opt.img} alt={opt.label} className="w-full h-36 object-cover" />
+                          {opt.img && <img src={opt.img} alt={opt.label} className="w-full h-36 object-cover" />}
                           <div className="p-3">
                             <p className="font-bold text-sm text-slate-900">{opt.label}</p>
                             <p className="text-xs text-slate-400 mt-0.5">{opt.description}</p>
