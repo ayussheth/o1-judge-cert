@@ -19,7 +19,8 @@ export async function GET(req: NextRequest) {
 
     const submissions = await Promise.all(
       blobs.map(async (blob) => {
-        const blobData = await get(blob.pathname, { token: process.env.BLOB_READ_WRITE_TOKEN });
+        const blobToken = process.env.BLOB_READ_WRITE_TOKEN!;
+        const blobData = await get(blob.pathname, { token: blobToken });
         if (!blobData) return null;
         const res = await fetch(blobData.url);
         return await res.json();
