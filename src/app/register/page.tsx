@@ -46,7 +46,7 @@ export default function RegisterPage() {
       JSON.stringify({ name, email, expertise })
     );
 
-    // Send to backend (fire and forget — don't block UX on this)
+    // Send to backend then redirect
     try {
       await fetch("/api/submit", {
         method: "POST",
@@ -57,9 +57,7 @@ export default function RegisterPage() {
       // Silently fail — user flow continues regardless
     }
 
-    setTimeout(() => {
-      router.push("/judge");
-    }, 800);
+    router.push("/judge");
   }
 
   return (
