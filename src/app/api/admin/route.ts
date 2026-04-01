@@ -1,4 +1,4 @@
-import { list, getDownloadUrl } from "@vercel/blob";
+import { list } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -20,17 +20,21 @@ export async function GET(req: NextRequest) {
 
     const submissions = await Promise.all(
       blobs.map(async (blob) => {
-        const downloadUrl = await getDownloadUrl(blob.pathname, { token: blobToken });
-        const res = await fetch(downloadUrl);
+        // For private blobs, fetch with the token in Authorization header
+        const res = await fetch(blob.url, {
+          headers: { Authorization: `Bearer ${blobToken}` },
+        });
+        if (!res.ok) return null;
         return await res.json();
       })
     );
 
-    submissions.sort((a, b) =>
+    const filtered = submissions.filter(Boolean);
+    filtered.sort((a, b) =>
       new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime()
     );
 
-    return NextResponse.json({ submissions });
+    return NextResponse.json({ submissions: filtered });
   } catch (err) {
     console.error("Admin route error:", err);
     return NextResponse.json({ error: "Failed to load submissions." }, { status: 500 });
