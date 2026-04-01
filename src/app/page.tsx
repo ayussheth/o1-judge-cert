@@ -271,37 +271,50 @@ export default function Home() {
         </section>
 
         {/* COMMUNITY PARTNERS */}
-        <section className="py-14 px-6 bg-gray-50 border-b border-gray-200">
-          <div className="max-w-4xl mx-auto text-center">
+        <section className="py-20 px-6 bg-white border-b border-gray-200">
+          <div className="max-w-5xl mx-auto">
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-              <motion.p variants={fadeUp} className="font-mono-accent text-xs tracking-[0.2em] uppercase text-[#B22234] mb-2">Community Partners</motion.p>
-              <motion.p variants={fadeUp} className="text-[10px] text-gray-400 font-mono-accent tracking-widest uppercase mb-8">(No Liability)</motion.p>
-              <motion.div variants={fadeUp} className="flex items-center justify-center gap-12 flex-wrap">
+              <motion.div className="mb-14 text-center">
+                <motion.p variants={fadeUp} className="font-mono-accent text-xs tracking-[0.2em] uppercase text-[#B22234] mb-3">Community Partners</motion.p>
+                <motion.h2 variants={fadeUp} className="font-serif text-4xl font-black text-[#002868]">Friends of Dunki.</motion.h2>
+                <motion.p variants={fadeUp} className="text-gray-400 text-sm mt-3 font-mono-accent tracking-widest uppercase">(No Liability Whatsoever)</motion.p>
+              </motion.div>
+              <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 {/* Devfolio */}
-                <a href="https://devfolio.co" target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
+                <a
+                  href="https://devfolio.co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card flex flex-col items-center justify-center py-10 gap-4 hover:border-[#B22234]/30 transition-all group"
+                >
                   <img
-                    src="https://assets.devfolio.co/company/26c99184b2b34e1b9b8a0c0b4dfcce88/assets/favicon.png"
+                    src="https://img.logo.dev/devfolio.co?token=pk_X-1ZO13GSgeOoUrIuJ4WWQ"
                     alt="Devfolio"
-                    className="h-8 w-auto grayscale hover:grayscale-0 transition-all"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      if (e.currentTarget.nextElementSibling) (e.currentTarget.nextElementSibling as HTMLElement).style.display = "block";
-                    }}
+                    className="h-12 w-auto grayscale group-hover:grayscale-0 transition-all"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
-                  <span className="font-serif font-bold text-xl text-gray-500 hidden">devfolio</span>
+                  <div className="text-center">
+                    <p className="font-serif font-bold text-lg text-[#002868]">Devfolio</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Where builders build things</p>
+                  </div>
                 </a>
                 {/* Fold */}
-                <a href="https://fold.money" target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
+                <a
+                  href="https://fold.money"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card flex flex-col items-center justify-center py-10 gap-4 hover:border-[#B22234]/30 transition-all group"
+                >
                   <img
-                    src="https://fold.money/static/media/fold-logo.svg"
+                    src="https://img.logo.dev/fold.money?token=pk_X-1ZO13GSgeOoUrIuJ4WWQ"
                     alt="Fold"
-                    className="h-8 w-auto grayscale hover:grayscale-0 transition-all"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      if (e.currentTarget.nextElementSibling) (e.currentTarget.nextElementSibling as HTMLElement).style.display = "block";
-                    }}
+                    className="h-12 w-auto grayscale group-hover:grayscale-0 transition-all"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
-                  <span className="font-serif font-bold text-xl text-gray-500 hidden">fold</span>
+                  <div className="text-center">
+                    <p className="font-serif font-bold text-lg text-[#002868]">Fold</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Spend smarter, earn rewards</p>
+                  </div>
                 </a>
               </motion.div>
             </motion.div>
