@@ -288,15 +288,11 @@ export default function Home() {
                   className="card flex flex-col items-center justify-center py-10 gap-4 hover:border-[#B22234]/30 transition-all group"
                 >
                   <img
-                    src="https://img.logo.dev/devfolio.co?token=pk_X-1ZO13GSgeOoUrIuJ4WWQ"
+                    src="/devfolio-logo.jpg"
                     alt="Devfolio"
-                    className="h-12 w-auto grayscale group-hover:grayscale-0 transition-all"
-                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                    className="h-10 w-auto object-contain"
                   />
-                  <div className="text-center">
-                    <p className="font-serif font-bold text-lg text-[#002868]">Devfolio</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Where builders build things</p>
-                  </div>
+                  <p className="text-xs text-gray-400 mt-0.5">Where builders build things</p>
                 </a>
                 {/* Fold */}
                 <a
@@ -306,10 +302,9 @@ export default function Home() {
                   className="card flex flex-col items-center justify-center py-10 gap-4 hover:border-[#B22234]/30 transition-all group"
                 >
                   <img
-                    src="https://img.logo.dev/fold.money?token=pk_X-1ZO13GSgeOoUrIuJ4WWQ"
+                    src="/fold-logo.jpg"
                     alt="Fold"
-                    className="h-12 w-auto grayscale group-hover:grayscale-0 transition-all"
-                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                    className="h-16 w-16 object-contain rounded-xl"
                   />
                   <div className="text-center">
                     <p className="font-serif font-bold text-lg text-[#002868]">Fold</p>
