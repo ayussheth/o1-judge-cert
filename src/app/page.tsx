@@ -279,7 +279,7 @@ export default function Home() {
                 <motion.h2 variants={fadeUp} className="font-serif text-4xl font-black text-[#002868]">Friends of Dunki.</motion.h2>
                 <motion.p variants={fadeUp} className="text-gray-400 text-sm mt-3 font-mono-accent tracking-widest uppercase">(No Liability Whatsoever)</motion.p>
               </motion.div>
-              <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 {/* Devfolio */}
                 <a
                   href="https://devfolio.co"
@@ -309,6 +309,23 @@ export default function Home() {
                   <div className="text-center">
                     <p className="font-serif font-bold text-lg text-[#002868]">Fold</p>
                     <p className="text-xs text-gray-400 mt-0.5">Spend smarter, earn rewards</p>
+                  </div>
+                </a>
+                {/* AI & Weekends */}
+                <a
+                  href="https://aiweekends.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card flex flex-col items-center justify-center py-10 gap-4 hover:border-[#B22234]/30 transition-all group"
+                >
+                  <img
+                    src="/aiweekends-logo.jpg"
+                    alt="AI & Weekends"
+                    className="h-16 w-auto object-contain rounded-xl"
+                  />
+                  <div className="text-center">
+                    <p className="font-serif font-bold text-lg text-[#002868]">AI &amp; Weekends</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Build things on weekends</p>
                   </div>
                 </a>
               </motion.div>

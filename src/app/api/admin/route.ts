@@ -7,29 +7,34 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!blobToken) {
     return NextResponse.json({ error: "Blob store not configured." }, { status: 500 });
   }
 
   try {
     const { blobs } = await list({
       prefix: "submissions/",
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: blobToken,
     });
 
     const submissions = await Promise.all(
       blobs.map(async (blob) => {
-        const res = await fetch(blob.url);
+        // For private blobs, fetch with the token in Authorization header
+        const res = await fetch(blob.url, {
+          headers: { Authorization: `Bearer ${blobToken}` },
+        });
+        if (!res.ok) return null;
         return await res.json();
       })
     );
 
-    // Sort newest first
-    submissions.sort((a, b) =>
+    const filtered = submissions.filter(Boolean);
+    filtered.sort((a, b) =>
       new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime()
     );
 
-    return NextResponse.json({ submissions });
+    return NextResponse.json({ submissions: filtered });
   } catch (err) {
     console.error("Admin route error:", err);
     return NextResponse.json({ error: "Failed to load submissions." }, { status: 500 });

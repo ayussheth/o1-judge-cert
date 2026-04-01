@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     const filename = `submissions/${Date.now()}-${email.replace(/[^a-z0-9]/gi, "_")}.json`;
     await put(filename, JSON.stringify(submission), {
-      access: "public",
+      access: "private",
       contentType: "application/json",
       token: process.env.BLOB_READ_WRITE_TOKEN,
     });
