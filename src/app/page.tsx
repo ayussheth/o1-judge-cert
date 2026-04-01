@@ -66,10 +66,10 @@ function FAQSection() {
 }
 
 const SPEAKERS = [
-  { name: "O. Mahajan", role: "Head of Recognition", org: "Moved Away", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=OMahajan&backgroundColor=b6e3f4" },
-  { name: "R. Manche", role: "Judging Committee", org: "Maskmeta", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=RManche&backgroundColor=d1d4f9" },
-  { name: "Jameel Jamali", role: "Ability Assessor", org: "Juicero", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=JameelJamali&backgroundColor=ffd5dc" },
-  { name: "Jin Yang", role: "Program Director", org: "TFX", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=JinYang&backgroundColor=c0aede" },
+  { name: "Andrew Mahajan", role: "Head of Recognition", org: "Moved Away", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=AndrewMahajan&backgroundColor=b6e3f4" },
+  { name: "Jameel Manche", role: "Judging Committee", org: "Maskmeta", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=JameelManche&backgroundColor=d1d4f9" },
+  { name: "Oshin Jamali", role: "Ability Assessor", org: "Juicero", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=OshinJamali&backgroundColor=ffd5dc" },
+  { name: "Rushi Tate", role: "Program Director", org: "TFX", avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=RushiTate&backgroundColor=c0aede" },
 ];
 
 const heroWords = ["The", "World's", "First"];
