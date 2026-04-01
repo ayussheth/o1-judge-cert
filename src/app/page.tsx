@@ -270,6 +270,44 @@ export default function Home() {
           </div>
         </section>
 
+        {/* COMMUNITY PARTNERS */}
+        <section className="py-14 px-6 bg-gray-50 border-b border-gray-200">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
+              <motion.p variants={fadeUp} className="font-mono-accent text-xs tracking-[0.2em] uppercase text-[#B22234] mb-2">Community Partners</motion.p>
+              <motion.p variants={fadeUp} className="text-[10px] text-gray-400 font-mono-accent tracking-widest uppercase mb-8">(No Liability)</motion.p>
+              <motion.div variants={fadeUp} className="flex items-center justify-center gap-12 flex-wrap">
+                {/* Devfolio */}
+                <a href="https://devfolio.co" target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
+                  <img
+                    src="https://assets.devfolio.co/company/26c99184b2b34e1b9b8a0c0b4dfcce88/assets/favicon.png"
+                    alt="Devfolio"
+                    className="h-8 w-auto grayscale hover:grayscale-0 transition-all"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      if (e.currentTarget.nextElementSibling) (e.currentTarget.nextElementSibling as HTMLElement).style.display = "block";
+                    }}
+                  />
+                  <span className="font-serif font-bold text-xl text-gray-500 hidden">devfolio</span>
+                </a>
+                {/* Fold */}
+                <a href="https://fold.money" target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
+                  <img
+                    src="https://fold.money/static/media/fold-logo.svg"
+                    alt="Fold"
+                    className="h-8 w-auto grayscale hover:grayscale-0 transition-all"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      if (e.currentTarget.nextElementSibling) (e.currentTarget.nextElementSibling as HTMLElement).style.display = "block";
+                    }}
+                  />
+                  <span className="font-serif font-bold text-xl text-gray-500 hidden">fold</span>
+                </a>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* FAQ — Accordion */}
         <FAQSection />
 
